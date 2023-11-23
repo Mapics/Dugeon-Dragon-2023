@@ -89,7 +89,7 @@ class Personnage
 
     
     public function recevoirDegats($degats) {
-        $this->pv -= $degats;
+        $this->PV -= $degats;
     }
     public function LevelUp() {
         $this->level += 1;
@@ -105,7 +105,7 @@ class Personnage
 }
 
 class Player extends Personnage {
-    protected $iventaire;
+    protected $inventaire;
 
     function __construct($name, $inventaire) {
         parent::__construct($name);
