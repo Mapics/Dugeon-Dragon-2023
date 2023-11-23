@@ -89,17 +89,34 @@ class DD_Game
     {
         echo "Vous entrez dans une salle de piege. Un piege vous attaque !\n";
     }
-
 }
 
+function initGame($dd_dao)
+{
+    echo "1. Nouvelle partie \n";
+    echo "2. Charger partie \n";
+    $choix = readline();
+    switch ($choix) {
+        case 1:
+            echo "Chissisez votre pseudo :\n";
+            $name = readline();
+            $player = new Player($name, array());
+            $game = new DD_Game($dd_dao, $player);
+        case 2:
+            // echo "Entrez votre precedent pseudo :\n";
+            // $name = readline();
+
+            // $player = new Player($name, array());
+            // $game = new DD_Game($dd_dao, $player);
+    }
+
+    return $game;
+}
 
 function startNewGame()
 {
-
 }
 
 function ContinueGame()
 {
-
 }
-?>
