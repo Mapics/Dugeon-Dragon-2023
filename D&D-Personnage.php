@@ -220,7 +220,7 @@ class Arme extends Objet {
         $this->degats = $degats;
     }
 
-    // getter
+    //getter
     public function getDegats() {
         return $this->degats;
     }
@@ -233,7 +233,7 @@ class Arme extends Objet {
         return $this->effet;
     }
 
-    // setter
+    //setter
     public function setDegats($degats) {
         $this->degats = $degats;
     }

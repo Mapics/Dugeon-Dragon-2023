@@ -107,3 +107,4 @@ class SalleEnigme extends Salle
         echo "Enigme: " . $this->getEnigme() . "\n";
     }
 }
+
