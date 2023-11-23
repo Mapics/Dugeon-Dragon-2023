@@ -133,15 +133,33 @@ class Personnage
         echo "Dégâts: " . $this->getPA() . "\n";
         echo "Défense: " . $this->getPD() . "\n";
     }
+
+    public function afficherInventaire()
+    {
+        echo "Inventaire: \n";
+        // echo "Arme: " . $this->getArme() . "\n";
+    }
 }
 
-class Player extends Personnage
+class Joueur extends Personnage
 {
     protected $inventaire;
 
     function __construct($name, $inventaire)
     {
         parent::__construct($name);
+        $this->inventaire = $inventaire;
+    }
+
+    // getter
+    public function getInventaire()
+    {
+        return $this->inventaire;
+    }
+
+    // setter
+    public function setInventaire($inventaire)
+    {
         $this->inventaire = $inventaire;
     }
 }
