@@ -4,6 +4,7 @@ class Personnage
     protected $id;
     protected $name;
     protected $PV;
+    protected $PVmax;
     protected $PA;
     protected $PD;
     protected $currentExp;
@@ -12,7 +13,8 @@ class Personnage
 
     function __construct($name) {
         $this->name = $name;
-        $this->PV = 100;
+        $this->PVmax = 100;
+        $this->PV = $this->PVmax;
         $this->PA = 10;
         $this->PD = 10;
         $this->currentExp = 0;
@@ -63,6 +65,10 @@ class Personnage
         //TODO
     }
 
+    public function setSave() {
+        //TODO
+    }
+
     public function attaquer(Personnage $cible) {
         $degats = $this->getPA() - $cible->getPD();
         if ($degats > 0) {
@@ -87,7 +93,6 @@ class Personnage
         }
     }
 
-    
     public function recevoirDegats($degats) {
         $this->PV -= $degats;
     }
