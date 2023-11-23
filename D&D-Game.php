@@ -51,8 +51,35 @@ class DD_Game
                 echo "Entrez votre precedent pseudo :\n";
                 $name = readline();
                 $this->setPlayerSave($this->ddDAO->GetSaveOf($name));
+                $this->Jouer();
                 break;
         }
+    }
+
+    public function Jouer() {
+        $this->afficherMenu();
+        $choix = readline();
+        switch ($choix) {
+            case 1:
+                $this->personnage->afficherStats();
+                break;
+            case 2:
+                $this->personnage->afficherInventaire();
+                break;
+            case 3:
+                $this->seDeplacer();
+                break;
+            case 4:
+                $this->ddDAO->Save($this->personnage);
+                break;
+            case 5:
+                echo "A bientot !\n";
+                break;
+        }
+    }
+
+    public function seDeplacer() {
+        // TODO
     }
 
     public function afficherMenu()
@@ -69,37 +96,5 @@ class DD_Game
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
     }
-
-    public function afficheSalleVide()
-    {
-        echo "Vous entrez dans une salle vide. Rien ne s'y trouve.\n";
-    }
-
-    public function afficheSalleCombat(Personnage $monstre)
-    {
-        echo "Vous entrez dans une salle de combat. Un " . $monstre->getName() . " vous attaque !\n";
-    }
-
-    public function afficheSalleMarhcand(Salle $marchand)
-    {
-        echo "Vous entrez dans une salle de marchand. Un Marchand vous propose des objets !\n";
-    }
-
-    public function afficheSallePiege(Salle $piege)
-    {
-        echo "Vous entrez dans une salle de piege. Un piege vous attaque !\n";
-    }
-
-}
-
-
-function startNewGame()
-{
-
-}
-
-function ContinueGame()
-{
-
 }
 ?>
