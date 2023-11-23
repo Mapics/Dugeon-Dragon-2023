@@ -51,12 +51,38 @@ class DD_Game
                 echo "Entrez votre precedent pseudo :\n";
                 $name = readline();
                 $this->setPlayerSave($this->ddDAO->GetSaveOf($name));
+                $this->Jouer();
                 break;
         }
     }
 
-    public function afficherMenu()
-    {
+    public function Jouer() {
+        $this->afficherMenu();
+        $choix = readline();
+        switch ($choix) {
+            case 1:
+                $this->personnage->afficherStats();
+                break;
+            case 2:
+                $this->personnage->afficherInventaire();
+                break;
+            case 3:
+                $this->seDeplacer();
+                break;
+            case 4:
+                $this->ddDAO->Save($this->personnage);
+                break;
+            case 5:
+                echo "A bientot !\n";
+                break;
+        }
+    }
+
+    public function seDeplacer() {
+        // TODO choisi aleatoirement la salle et faire evenet ineraction interieur
+    }
+
+    public function afficherMenu() {
         echo "1. Afficher les informations du personnage\n";
         echo "2. Afficher les informations de l'inventaire\n";
         echo "3. Se déplacer\n";
@@ -64,8 +90,7 @@ class DD_Game
         echo "6. Quitter\n";
     }
 
-    public function afficheAttaque()
-    {
+    public function afficheAttaque() {
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
     }

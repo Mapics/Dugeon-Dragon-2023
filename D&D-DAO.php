@@ -1,7 +1,5 @@
 <?php
-
-class ddDAO
-{
+class DD_DAO {
     protected $bdd;
 
     public function __construct($bdd)
