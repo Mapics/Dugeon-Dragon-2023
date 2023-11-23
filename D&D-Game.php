@@ -79,6 +79,7 @@ class DD_Game
     }
 
     public function seDeplacer() {
+        // $this->afficherDeplacement();
         // TODO choisi aleatoirement la salle et faire evenet ineraction interieur
     }
 
