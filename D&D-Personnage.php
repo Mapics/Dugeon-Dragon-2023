@@ -87,6 +87,10 @@ class Personnage
         }
     }
 
+    
+    public function recevoirDegats($degats) {
+        $this->pv -= $degats;
+    }
     public function LevelUp() {
         $this->level += 1;
         $this->PV = $this->PV * 1.5;
@@ -95,6 +99,46 @@ class Personnage
         $this->expForNextLevel = $this->expForNextLevel * 1.5;
     }
 
-// public takeDamage
+    public function afficherStats() {
+        echo "Nom : " . $this->name . ", Niveau de puissance : " . $this->level . ", Points de vie : " . $this->PV . ", Points d'attaque : " . $this->PA . ", Points de défense : " . $this->PD . "\n";
+    }
+}
+
+class Player extends Personnage {
+    protected $iventaire;
+
+    function __construct($name, $inventaire) {
+        parent::__construct($name);
+        $this->inventaire = $inventaire;
+    }
+}
+
+class Monstre extends Personnage {
+    protected $level;
+
+    function __construct($name, $level) {
+        parent::__construct($name);
+        $this->PV = 100 * $level;
+        $this->PA = 10 * $level;
+        $this->PD = 10 * $level;
+        $this->level = $level;
+    }
+
+    // getter
+    public function getLevel() {
+        return $this->level;
+    }
+
+    // setter
+    public function setLevel($level) {
+        $this->level = $level;
+    }
+
+    public function attaquer(Personnage $cible) {
+        $degats = $this->getPA() - $cible->getPD();
+        if ($degats > 0) {
+            $cible->PV -= $degats;
+        }
+    }
 }
 ?>
