@@ -107,3 +107,26 @@ class SalleEnigme extends Salle
         echo "Enigme: " . $this->getEnigme() . "\n";
     }
 }
+
+class SalleMarchand extends Salle
+{
+    protected $marchand;
+
+    public function __construct($type, $description, $marchand)
+    {
+        parent::__construct($type, $description);
+        $this->marchand = $marchand;
+    }
+
+    public function getMarchand()
+    {
+        return $this->marchand;
+    }
+
+    public function afficherInformations()
+    {
+        echo "Type de salle: " . $this->getType() . "\n";
+        echo "Description: " . $this->getDescription() . "\n";
+        echo "Marchand: " . $this->getMarchand() . "\n";
+    }
+}
