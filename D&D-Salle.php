@@ -32,6 +32,8 @@ class SalleCombat extends Salle
         parent::__construct($type, $description);
         $this->monstre = $monstre;
     }
+
+    // piege debuff 
     public function getMonstre()
     {
         return $this->monstre;
