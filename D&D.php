@@ -7,6 +7,9 @@ require_once('D&D-Personnage');
 require_once('D&D-Salle');
 $connexion = new PDO("mysql:host={$config['hote']};port={$config['port']};dbname={$config['nomDeLaBase']}", $config['utilisateur'], $config['motDePasse']);
 
+$ddDAO = new ddDAO($connexion);
+$ddGame = new ddGame($ddDAO);
+$ddGame->initGame($ddDAO);
 
 
 

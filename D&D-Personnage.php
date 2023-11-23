@@ -256,9 +256,6 @@ class Arme extends Objet {
             $cible->setPD($cible->getPD() + $this->malus);
         }
     }
-
-
-
 }
 
 class Inventaire {

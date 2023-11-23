@@ -79,11 +79,10 @@ class DD_Game
     }
 
     public function seDeplacer() {
-        // TODO
+        // TODO choisi aleatoirement la salle et faire evenet ineraction interieur
     }
 
-    public function afficherMenu()
-    {
+    public function afficherMenu() {
         echo "1. Afficher les informations du personnage\n";
         echo "2. Afficher les informations de l'inventaire\n";
         echo "3. Se déplacer\n";
@@ -91,8 +90,7 @@ class DD_Game
         echo "6. Quitter\n";
     }
 
-    public function afficheAttaque()
-    {
+    public function afficheAttaque() {
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
     }
