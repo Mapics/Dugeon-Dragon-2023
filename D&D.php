@@ -10,8 +10,3 @@ $connexion = new PDO("mysql:host={$config['hote']};port={$config['port']};dbname
 $ddDAO = new ddDAO($connexion);
 $ddGame = new ddGame($ddDAO);
 $ddGame->initGame($ddDAO);
-
-
-
-
-?>

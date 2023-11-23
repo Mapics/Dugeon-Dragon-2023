@@ -11,7 +11,8 @@ class Personnage
     protected $expForNextLevel;
     protected $level;
 
-    function __construct($name) {
+    function __construct($name)
+    {
         $this->name = $name;
         $this->PVmax = 100;
         $this->PV = $this->PVmax;
@@ -22,61 +23,77 @@ class Personnage
     }
 
     // getter
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
-    public function getPV() {
+    public function getPV()
+    {
         return $this->PV;
     }
-    public function getPA() {
+    public function getPA()
+    {
         return $this->PA;
     }
-    public function getPD() {
+    public function getPD()
+    {
         return $this->PD;
     }
-    public function getCurrentExp() {
+    public function getCurrentExp()
+    {
         return $this->currentExp;
     }
-    public function getLevel() {
+    public function getLevel()
+    {
         return $this->level;
     }
 
     // setter
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    public function setPV($PV) {
+    public function setPV($PV)
+    {
         $this->PV = $PV;
     }
-    public function setPA($PA) {
+    public function setPA($PA)
+    {
         $this->PA = $PA;
     }
-    public function setPD($PD) {
+    public function setPD($PD)
+    {
         $this->PD = $PD;
     }
-    public function setCurrentExp($currentExp) {
+    public function setCurrentExp($currentExp)
+    {
         $this->currentExp = $currentExp;
     }
-    public function setLevel($level) {
+    public function setLevel($level)
+    {
         $this->level = $level;
-    }    
+    }
 
-    public function Equip() {
+    public function Equip()
+    {
         //TODO
     }
 
-    public function setSave() {
+    public function setSave()
+    {
         //TODO
     }
 
-    public function attaquer(Personnage $cible) {
+    public function attaquer(Personnage $cible)
+    {
         $degats = $this->getPA() - $cible->getPD();
         if ($degats > 0) {
             $cible->PV -= $degats;
         }
     }
 
-    public function GainExp(Int $exp) {
+    public function GainExp(Int $exp)
+    {
         $this->currentExp += $exp;
         if ($this->currentExp >= $this->expForNextLevel) {
             $this->level += 1;
@@ -85,7 +102,8 @@ class Personnage
         }
     }
 
-    public function isDead() {
+    public function isDead()
+    {
         if ($this->PV <= 0) {
             return true;
         } else {
@@ -93,10 +111,12 @@ class Personnage
         }
     }
 
-    public function recevoirDegats($degats) {
+    public function recevoirDegats($degats)
+    {
         $this->PV -= $degats;
     }
-    public function LevelUp() {
+    public function LevelUp()
+    {
         $this->level += 1;
         $this->PV = $this->PV * 1.5;
         $this->PA = $this->PA * 1.5;
@@ -104,24 +124,29 @@ class Personnage
         $this->expForNextLevel = $this->expForNextLevel * 1.5;
     }
 
-    public function afficherStats() {
+    public function afficherStats()
+    {
         echo "Nom : " . $this->name . ", Niveau de puissance : " . $this->level . ", Points de vie : " . $this->PV . ", Points d'attaque : " . $this->PA . ", Points de défense : " . $this->PD . "\n";
     }
 }
 
-class Player extends Personnage {
+class Player extends Personnage
+{
     protected $inventaire;
 
-    function __construct($name, $inventaire) {
+    function __construct($name, $inventaire)
+    {
         parent::__construct($name);
         $this->inventaire = $inventaire;
     }
 }
 
-class Monstre extends Personnage {
+class Monstre extends Personnage
+{
     protected $level;
 
-    function __construct($name, $level) {
+    function __construct($name, $level)
+    {
         parent::__construct($name);
         $this->PV = 100 * $level;
         $this->PA = 10 * $level;
@@ -130,17 +155,20 @@ class Monstre extends Personnage {
     }
 
     // getter
-    public function getLevel() {
+    public function getLevel()
+    {
         return $this->level;
     }
 
     // setter
-    public function setLevel($level) {
+    public function setLevel($level)
+    {
         $this->level = $level;
     }
 }
 
-class Objet {
+class Objet
+{
     protected $nomObjet;
 
     protected $typeObjet;
@@ -149,7 +177,8 @@ class Objet {
 
     protected $malus;
 
-    function __construct($nomObjet, $typeObjet, $bonus, $malus) {
+    function __construct($nomObjet, $typeObjet, $bonus, $malus)
+    {
         $this->nomObjet = $nomObjet;
         $this->typeObjet = $typeObjet;
         $this->bonus = $bonus;
@@ -157,45 +186,55 @@ class Objet {
     }
 
     // getter
-    public function getNomObjet() {
+    public function getNomObjet()
+    {
         return $this->nomObjet;
     }
 
-    public function getTypeObjet() {
+    public function getTypeObjet()
+    {
         return $this->typeObjet;
     }
 
-    public function getBonus() {
+    public function getBonus()
+    {
         return $this->bonus;
     }
 
-    public function getMalus() {
+    public function getMalus()
+    {
         return $this->malus;
     }
 
     // setter
 
-    public function setNomObjet($nomObjet) {
+    public function setNomObjet($nomObjet)
+    {
         $this->nomObjet = $nomObjet;
     }
 
-    public function setTypeObjet($typeObjet) {
+    public function setTypeObjet($typeObjet)
+    {
         $this->typeObjet = $typeObjet;
     }
 
-    public function setBonus($bonus) {
+    public function setBonus($bonus)
+    {
         $this->bonus = $bonus;
     }
 
-    public function setMalus($malus) {
+    public function setMalus($malus)
+    {
         $this->malus = $malus;
     }
 
-    public function afficherObjet() {
+    public function afficherObjet()
+    {
         echo "Nom de l'objet : " . $this->nomObjet . ", Type d'objet : " . $this->typeObjet . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . "\n";
     }
 
-    public function utiliserObjet(Personnage $cible) {
+    public function utiliserObjet(Personnage $cible)
+    {
         if ($this->typeObjet == "arme") {
             $cible->setPA($cible->getPA() + $this->bonus);
             $cible->setPD($cible->getPD() + $this->malus);
@@ -205,7 +244,8 @@ class Objet {
     }
 }
 
-class Arme extends Objet {
+class Arme extends Objet
+{
 
     protected $typeArme;
 
@@ -213,7 +253,8 @@ class Arme extends Objet {
 
     protected $degats;
 
-    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet) {
+    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet)
+    {
         parent::__construct($nomObjet, $typeObjet, $bonus, $malus);
         $this->typeArme = $typeArme;
         $this->effet = $effet;
@@ -225,11 +266,13 @@ class Arme extends Objet {
         return $this->degats;
     }
 
-    public function getTypeArme() {
+    public function getTypeArme()
+    {
         return $this->typeArme;
     }
 
-    public function getEffet() {
+    public function getEffet()
+    {
         return $this->effet;
     }
 
@@ -238,19 +281,23 @@ class Arme extends Objet {
         $this->degats = $degats;
     }
 
-    public function setTypeArme($typeArme) {
+    public function setTypeArme($typeArme)
+    {
         $this->typeArme = $typeArme;
     }
 
-    public function setEffet($effet) {
+    public function setEffet($effet)
+    {
         $this->effet = $effet;
     }
 
-    public function afficherArme() {
+    public function afficherArme()
+    {
         echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . "\n";
     }
 
-    public function utiliserObjet(Personnage $cible) {
+    public function utiliserObjet(Personnage $cible)
+    {
         if ($this->typeObjet == "arme") {
             $cible->setPA($cible->getPA() + $this->bonus);
             $cible->setPD($cible->getPD() + $this->malus);
@@ -258,28 +305,32 @@ class Arme extends Objet {
     }
 }
 
-class Inventaire {
+class Inventaire
+{
     protected $arme;
 
-    function __construct($arme) {
+    function __construct($arme)
+    {
         $this->arme = $arme;
     }
 
     // getter
-    public function getArme() {
+    public function getArme()
+    {
         return $this->arme;
     }
 
     // setter
-    public function setArme($arme) {
+    public function setArme($arme)
+    {
         $this->arme = $arme;
     }
 
-    public function afficherInventaire() {
+    public function afficherInventaire()
+    {
         echo "Voici les objets dans votre inventaire :";
         foreach ($this->arme as $key => $value) {
             echo $key . " : " . $value . "\n";
         }
     }
 }
-?>
