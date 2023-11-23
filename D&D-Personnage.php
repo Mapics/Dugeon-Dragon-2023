@@ -195,7 +195,70 @@ class Objet {
         echo "Nom de l'objet : " . $this->nomObjet . ", Type d'objet : " . $this->typeObjet . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . "\n";
     }
 
-    
+    public function utiliserObjet(Personnage $cible) {
+        if ($this->typeObjet == "arme") {
+            $cible->setPA($cible->getPA() + $this->bonus);
+            $cible->setPD($cible->getPD() + $this->malus);
+        } elseif ($this->typeObjet == "potion") {
+            $cible->setPV($cible->getPV() + $this->bonus);
+        }
+    }
+}
+
+class Arme extends Objet {
+
+    protected $typeArme;
+
+    protected $effet;
+
+    protected $degats;
+
+    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet) {
+        parent::__construct($nomObjet, $typeObjet, $bonus, $malus);
+        $this->typeArme = $typeArme;
+        $this->effet = $effet;
+        $this->degats = $degats;
+    }
+
+    // getter
+    public function getDegats() {
+        return $this->degats;
+    }
+
+    public function getTypeArme() {
+        return $this->typeArme;
+    }
+
+    public function getEffet() {
+        return $this->effet;
+    }
+
+    // setter
+    public function setDegats($degats) {
+        $this->degats = $degats;
+    }
+
+    public function setTypeArme($typeArme) {
+        $this->typeArme = $typeArme;
+    }
+
+    public function setEffet($effet) {
+        $this->effet = $effet;
+    }
+
+    public function afficherArme() {
+        echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . "\n";
+    }
+
+    public function utiliserObjet(Personnage $cible) {
+        if ($this->typeObjet == "arme") {
+            $cible->setPA($cible->getPA() + $this->bonus);
+            $cible->setPD($cible->getPD() + $this->malus);
+        }
+    }
+
+
+
 }
 
 class Inventaire {
