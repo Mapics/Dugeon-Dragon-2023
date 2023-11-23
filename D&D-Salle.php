@@ -48,6 +48,7 @@ class SalleCombat extends Salle
         $this->monstre = $monstre;
     }
 
+    // piege debuff 
     public function getMonstre()
     {
         return $this->monstre;
