@@ -126,7 +126,12 @@ class Personnage
 
     public function afficherStats()
     {
-        echo "Nom : " . $this->name . ", Niveau de puissance : " . $this->level . ", Points de vie : " . $this->PV . ", Points d'attaque : " . $this->PA . ", Points de défense : " . $this->PD . "\n";
+        echo "Statistiques: \n";
+        echo "Nom: " . $this->getName() . "\n";
+        echo "Vie: " . $this->getPV() . "\n";
+        echo "Niveau: " . $this->getLevel() . "\n";
+        echo "Dégâts: " . $this->getPA() . "\n";
+        echo "Défense: " . $this->getPD() . "\n";
     }
 }
 
