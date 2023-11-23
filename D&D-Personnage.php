@@ -7,8 +7,8 @@ class Personnage
     protected $PA;
     protected $PD;
     protected $currentExp;
+    protected $expForNextLevel;
     protected $level;
-    protected $armor;
 
     function __construct($name) {
         $this->name = $name;
@@ -17,7 +17,6 @@ class Personnage
         $this->PD = 10;
         $this->currentExp = 0;
         $this->level = 1;
-        $this->armor = 0;
     }
 
     // getter
@@ -39,9 +38,6 @@ class Personnage
     public function getLevel() {
         return $this->level;
     }
-    public function getArmor() {
-        return $this->armor;
-    }
 
     // setter
     public function setName($name) {
@@ -61,11 +57,7 @@ class Personnage
     }
     public function setLevel($level) {
         $this->level = $level;
-    }
-    public function setArmor($armor) {
-        $this->armor = $armor;
-    }
-    
+    }    
 
     public function Equip() {
         //TODO
@@ -78,8 +70,31 @@ class Personnage
         }
     }
 
-    public function GagnerExp() {
-        $this->Xp;
+    public function GainExp(Int $exp) {
+        $this->currentExp += $exp;
+        if ($this->currentExp >= $this->expForNextLevel) {
+            $this->level += 1;
+            $this->currentExp = 0;
+            $this->expForNextLevel = $this->expForNextLevel * 1.5;
+        }
     }
+
+    public function isDead() {
+        if ($this->PV <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function LevelUp() {
+        $this->level += 1;
+        $this->PV = $this->PV * 1.5;
+        $this->PA = $this->PA * 1.5;
+        $this->PD = $this->PD * 1.5;
+        $this->expForNextLevel = $this->expForNextLevel * 1.5;
+    }
+
+// public takeDamage
 }
 ?>
