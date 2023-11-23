@@ -138,11 +138,87 @@ class Monstre extends Personnage {
     public function setLevel($level) {
         $this->level = $level;
     }
+}
 
-    public function attaquer(Personnage $cible) {
-        $degats = $this->getPA() - $cible->getPD();
-        if ($degats > 0) {
-            $cible->PV -= $degats;
+class Objet {
+    protected $nomObjet;
+
+    protected $typeObjet;
+
+    protected $bonus;
+
+    protected $malus;
+
+    function __construct($nomObjet, $typeObjet, $bonus, $malus) {
+        $this->nomObjet = $nomObjet;
+        $this->typeObjet = $typeObjet;
+        $this->bonus = $bonus;
+        $this->malus = $malus;
+    }
+
+    // getter
+    public function getNomObjet() {
+        return $this->nomObjet;
+    }
+
+    public function getTypeObjet() {
+        return $this->typeObjet;
+    }
+
+    public function getBonus() {
+        return $this->bonus;
+    }
+
+    public function getMalus() {
+        return $this->malus;
+    }
+
+    // setter
+
+    public function setNomObjet($nomObjet) {
+        $this->nomObjet = $nomObjet;
+    }
+
+    public function setTypeObjet($typeObjet) {
+        $this->typeObjet = $typeObjet;
+    }
+
+    public function setBonus($bonus) {
+        $this->bonus = $bonus;
+    }
+
+    public function setMalus($malus) {
+        $this->malus = $malus;
+    }
+
+    public function afficherObjet() {
+        echo "Nom de l'objet : " . $this->nomObjet . ", Type d'objet : " . $this->typeObjet . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . "\n";
+    }
+
+    
+}
+
+class Inventaire {
+    protected $arme;
+
+    function __construct($arme) {
+        $this->arme = $arme;
+    }
+
+    // getter
+    public function getArme() {
+        return $this->arme;
+    }
+
+    // setter
+    public function setArme($arme) {
+        $this->arme = $arme;
+    }
+
+    public function afficherInventaire() {
+        echo "Voici les objets dans votre inventaire :";
+        foreach ($this->arme as $key => $value) {
+            echo $key . " : " . $value . "\n";
         }
     }
 }
