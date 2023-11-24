@@ -22,10 +22,20 @@ class DD_DAO
             return false;
         }
     }
+    public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur) {
+        try {
+            $requete = $this->bdd->prepare("INSERT INTO inventaire (Id_arme, Id_perso) VALUES (?, ?)");
+            $requete->execute([$inventaire->getArme()->getId(), $joueur->getId()]);
+        
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur d'ajout d'inventaire: " . $e->getMessage();
+            return false;
+        }
 
-    // VERIFIER SI UN JOUEUR EST DEJA PRESENT DANS LA BASE DE DONNEES
-    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
-    {
+    }
+
+    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
@@ -191,26 +201,14 @@ class DD_DAO
         }
     }
 
-    public function Sauvegarder()
-    {
+    public function Sauvegarder(Personnage $joueur) {
         try {
-            $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
-            $requete->execute();
-            $result = $requete->fetchAll(PDO::FETCH_ASSOC);
-
-            $IdPerso = $result['Id_perso'];
-
-            $requete2 = $this->bdd->prepare("SELECT * FROM inventaire WHERE Id_perso = ?");
-            $requete2->execute([$IdPerso]);
-            $result2 = $requete2->fetchAll(PDO::FETCH_ASSOC);
-
-            $IdInventaire = $result2['Id_inventaire'];
-
-            $requete3 = $this->bdd->prepare("INSERT INTO sauvegarde (Id_perso, Id_inventaire) VALUES (?, ?)");
-            $requete3->execute([$IdPerso, $IdInventaire]);
+            $requete = $this->bdd->prepare("UPDATE personnages SET PV = ?, PA = ?, PD = ?, EXP = ?, Niveau = ? WHERE nom = ?");
+            $requete->execute([$joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel(), $joueur->getName()]);
+            return true;
         } catch (PDOException $e) {
-            echo "Erreur lors de la sauvegarde : " . $e->getMessage();
-            return NULL;
+            echo "Erreur de sauvegarde de personnage: " . $e->getMessage();
+            return false;
         }
     }
 }
