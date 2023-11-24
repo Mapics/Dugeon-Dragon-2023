@@ -39,10 +39,9 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = rand(1, 100);
+        $rand = 20;
         switch (true) {
             case $rand < 50:
-                echo "salle combat";
                 try {
                     $newMonstre = $this->bdd->prepare("SELECT * FROM Monstre WHERE Type = 'normal' ORDER BY RAND() LIMIT 1");
                     $newMonstre->execute();
@@ -63,8 +62,6 @@ class DD_DAO
                 // $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
                 // $salleCombat->afficherInformations();
             case $rand >= 50 && $rand < 75:
-                echo "salle marchand";
-
                 try {
                     $newMarchand = $this->bdd->prepare("SELECT * FROM Marchand ORDER BY RAND() LIMIT 2");
                     $newMarchand->execute();

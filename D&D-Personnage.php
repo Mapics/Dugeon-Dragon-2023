@@ -17,7 +17,7 @@ class Personnage
         $this->PVmax = 100;
         $this->PV = $this->PVmax;
         $this->PA = 10;
-        $this->PD = 10;
+        $this->PD = 3;
         $this->currentExp = 0;
         $this->level = 1;
     }
