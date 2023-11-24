@@ -16,6 +16,8 @@ class DD_DAO
         try {
             $requete = $this->bdd->prepare("INSERT INTO personnages (nom, PV, PA, PD, EXP, Niveau) VALUES (?, ?, ?, ?, ?, ?)");
             $requete->execute([$joueur->getName(), $joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel()]);
+
+            $joueur->setId($this->bdd->lastInsertId());
             return true;
         } catch (PDOException $e) {
             echo "Erreur d'ajout de personnage: " . $e->getMessage();
@@ -24,12 +26,12 @@ class DD_DAO
     }
 
     // AJOUTE L'INVENTAIRE LIE AU JOUEUR A LA BASE DE DONNEE
-    public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur)
+    public function ajouterInventaireBDD(Arme $arme, Personnage $joueur)
     {
         try {
             // INSERE UNE NOUVELLE LIGNE DANS LA TABLE INVENTAIRE EN FONCTION DE L'IDENTIFIANT DU JOUEUR ET SON ARME
             $requete = $this->bdd->prepare("INSERT INTO inventaire (Id_arme, Id_perso) VALUES (?, ?)");
-            $requete->execute([$inventaire->getArme()->getId(), $joueur->getId()]);
+            $requete->execute([$this->getArmeIDfromName($arme->getNomObjet()), $joueur->getId()]);
             return true;
         } catch (PDOException $e) {
             // SI ERREUR
@@ -101,7 +103,7 @@ class DD_DAO
     // GENERER UNE SALLE ALEATOIRE PARMI COMBAT, VIDE, BOSS, MARCHAND, ENIGME
     public function salleAleatoire()
     {
-        $rand = rand(50, 75);
+        $rand = rand(1, 100);
         switch (true) {
                 // 50% SALLE COMBAT
             case $rand < 50:
@@ -214,9 +216,18 @@ class DD_DAO
         }
     }
 
-    // UTILE POUR LA SAUVEGARDE
-    public function getPlayerIDfromName(String $name)
-    {
+    public function getArmeIDfromName(String $arme) {
+        try {
+            $requete = $this->bdd->prepare("SELECT Id_arme FROM armes WHERE Nom_arme = ?");
+            $requete->execute([$arme]);
+            $result = $requete->fetch(PDO::FETCH_ASSOC);
+            return $result['Id_arme'];
+        } catch (PDOException $e) {
+            echo "Erreur de recherche d'arme: " . $e->getMessage();
+            return NULL;
+        }
+    }
+    public function getPlayerIDfromName(String $name) {
         try {
             // SELECTIONNE L'ID D'UN PERSONNAGE A PARTIR DE SON NOM
             $requete = $this->bdd->prepare("SELECT id_perso FROM personnages WHERE nom = ?");

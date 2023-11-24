@@ -54,7 +54,7 @@ class DD_Game
                 $name = readline();
                 $this->joueur = new Joueur($name, new Inventaire(""));
                 $this->ddDAO->ajouterJoueurBDD($this->joueur);
-                $this->ddDAO->ajouterInventaireBDD($this->joueur->getInventaire(), $this->joueur);
+                // $this->ddDAO->ajouterInventaireBDD($th, $this->joueur);
                 $this->Jouer();
                 break;
             case 2:
