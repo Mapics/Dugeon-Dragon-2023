@@ -202,7 +202,7 @@ class SalleEnigme extends Salle
             switch ($rand) {
                 case 1:
                     $PV = $joueur->getPV();
-                    $PVmax = $joueur->getPVMax();
+                    $PVmax = $joueur->getPVmax();
 
                     $PVperdus = $PVmax * 0.1;
 
