@@ -162,14 +162,15 @@ class Joueur extends Personnage
         $this->inventaire[] = $objet;
     }
 
-    public function setPlayerSave($PV, $PA, $PD, $EXP, $Niveau) {
+    public function setPlayerSave($PV, $PA, $PD, $EXP, $Niveau)
+    {
         $this->PV = $PV;
         $this->PA = $PA;
         $this->PD = $PD;
         $this->currentExp = $EXP;
         $this->level = $Niveau;
     }
-    
+
     public function supprimerObjetInventaire($objet)
     {
         $index = array_search($objet, $this->inventaire);
@@ -224,7 +225,8 @@ class Joueur extends Personnage
         return $armes[$nomArme];
     }
 
-    public function acheter(Arme $arme) {
+    public function acheter(Arme $arme)
+    {
         if ($this->or >= $arme->getPrix()) {
             $this->or -= $arme->getPrix();
             $this->ajouterObjetInventaire($arme);

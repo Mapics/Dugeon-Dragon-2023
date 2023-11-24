@@ -8,7 +8,8 @@ class DD_DAO
         $this->bdd = $bdd;
     }
 
-    public function ajouterJoueurBDD(Joueur $joueur) {
+    public function ajouterJoueurBDD(Joueur $joueur)
+    {
         try {
             $requete = $this->bdd->prepare("INSERT INTO personnages (nom, PV, PA, PD, EXP, Niveau) VALUES (?, ?, ?, ?, ?, ?)");
             $requete->execute([$joueur->getName(), $joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel()]);
@@ -19,7 +20,8 @@ class DD_DAO
         }
     }
 
-    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
+    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
+    {
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
@@ -28,7 +30,7 @@ class DD_DAO
             $player->setPlayerSave($PV, $PA, $PD, $EXP, $Niveau);
 
 
-            if(count($result) > 0) {
+            if (count($result) > 0) {
                 return $player;
             } else {
                 return NULL;
@@ -36,7 +38,6 @@ class DD_DAO
         } catch (PDOException $e) {
             echo "Erreur de recherche de personnage: " . $e->getMessage();
             return NULL;
-            
         }
     }
 
@@ -104,13 +105,13 @@ class DD_DAO
                         $newArme = $this->bdd->prepare("SELECT * FROM armes WHERE Id_arme = $ArmeId");
                         $newArme->execute();
 
-                        
+
 
                         $NouvelleArme = $newArme->fetch(PDO::FETCH_ASSOC);
-                        
-                        $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "test", $NouvelleArme['Niv_requis'], $NouvelleArme['Prix']); 
+
+                        $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme", $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "test", $NouvelleArme['Niv_requis'], $NouvelleArme['Prix']);
                     }
-                    
+
                     $salleMarchand = new SalleMarchand('Marchand', 'Un marchand vous propose des objets', $MarchandArmes[0], $MarchandArmes[1]);
 
                     return $salleMarchand;
@@ -164,12 +165,13 @@ class DD_DAO
         }
     }
 
-    public function Sauvegarder() {
+    public function Sauvegarder()
+    {
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute();
             $result = $requete->fetchAll(PDO::FETCH_ASSOC);
-            
+
             $IdPerso = $result['Id_perso'];
 
             $requete2 = $this->bdd->prepare("SELECT * FROM inventaire WHERE Id_perso = ?");

@@ -1,4 +1,4 @@
-<?php 
+<?php
 $config = array(
     'hote' => 'localhost',
     'utilisateur' => 'dd_root',
@@ -6,4 +6,3 @@ $config = array(
     'nomDeLaBase' => 'ddprojet',
     'port' => '3306',
 );
-?>
