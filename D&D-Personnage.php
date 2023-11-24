@@ -200,7 +200,7 @@ class Monstre extends Personnage
 {
     protected $level;
     protected $dropExp;
-    protected $dromGold;
+    protected $dropGold;
 
     function __construct($name, $PV, $PA, $PD, $level, $dropExp, $dropGold)
     {
@@ -209,8 +209,8 @@ class Monstre extends Personnage
         $this->PA = $PA * $level;
         $this->PD = $PD * $level;
         $this->level = $level;
-        $this->dromExp = $dropExp;
-        $this->dromGold = $dropGold;
+        $this->dropExp = $dropExp;
+        $this->dropGold = $dropGold;
     }
 
     // getter
