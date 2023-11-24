@@ -39,7 +39,7 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = rand(50, 75);
+        $rand = rand(90, 95);
         switch (true) {
             case $rand < 50:
                 try {
@@ -106,11 +106,25 @@ class DD_DAO
                 // $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
                 // return $salleEnigme;
             case $rand >= 90 && $rand < 95:
-                echo "salle boss";
-                $salleBoss = new SalleBoss('Boss', 'un boss vous attend', new Monstre('Boss', 10));
-                return $salleBoss;
+                try {
+                    $newBoss = $this->bdd->prepare("SELECT * FROM Monstre WHERE Type = 'boss' ORDER BY RAND() LIMIT 1");
+                    $newBoss->execute();
+
+                    $Boss = $newBoss->fetch(PDO::FETCH_ASSOC);
+
+                    $randLvl = rand(1, 5);
+
+                    $salleBoss = new SalleCombat('Combat', 'Un très dangereux Boss va apparaitre', new Monstre($Boss['Nom'], $Boss['PV'], $Boss['PA'], $Boss['PD'], $randLvl, $Boss['Exp_donne'], $Boss['Gold_donne']));
+
+                    // $salleCombat->afficherInformations();
+
+                    return $salleBoss;
+                } catch (PDOException $e) {
+                    echo "Erreur lors de la récupération du Boss : " . $e->getMessage();
+                    return NULL;
+                }
             case $rand >= 95 && $rand <= 100:
-                echo "salle vide";
+                echo "Vous êtes tombé sur une salle vide !";
                 return null;
             default:
                 echo "erreur dans la sélection de la salle";
