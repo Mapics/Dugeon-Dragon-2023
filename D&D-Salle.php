@@ -211,7 +211,7 @@ class SalleEnigme extends Salle
                         $joueur->setPV($nouveauPV);
                         echo "Vous avez perdu 10% de vos points de vie.\nPoints de vie restants : " . $nouveauPV . ".\n";
                     } else {
-                        gameOver();
+                        // GAMEOVER
                     }
                     break;
                 case 2:
