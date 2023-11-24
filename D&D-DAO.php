@@ -230,10 +230,8 @@ class DD_DAO
             return NULL;
         }
     }
-
-    // FONCTION POUR SAUVEGARDER LA PARTIE
-    public function Sauvegarder(Personnage $joueur)
-    {
+    
+    public function Sauvegarder(Personnage $joueur) {
         try {
             try {
                 // RECUPERE DE L'INVENTAIRE DU JOUEUR
