@@ -67,8 +67,7 @@ class DD_Game
                     $this->joueur->afficherStats();
                     break;
                 case 2:
-                    $jInevntaire = $this->joueur->getInventaire();
-                    $jInevntaire->afficherInventaire();
+                    $this->joueur->getInventaire()->afficherInventaire();
                     break;
                 case 3:
                     $this->seDeplacer();
@@ -140,12 +139,4 @@ class DD_Game
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
     }
-}
-
-function startNewGame()
-{
-}
-
-function ContinueGame()
-{
 }

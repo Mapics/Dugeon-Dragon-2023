@@ -39,7 +39,8 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = rand(0, 100);
+        // TODO remettre aleatoire
+        $rand = 20;
         switch (true) {
             case $rand < 50:
                 echo "salle combat";
