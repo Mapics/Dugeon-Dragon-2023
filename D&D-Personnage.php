@@ -1,17 +1,19 @@
 <?php
-class Personnage
-{
-    protected $id;
-    protected $name;
-    protected $PV;
-    protected $PVmax;
-    protected $PA;
-    protected $PD;
-    protected $currentExp;
-    protected $expForNextLevel;
-    protected $level;
 
-    function __construct($name)
+
+class Personnage        //CLASSE PERSONNAGE
+{
+    protected $id;      //ID DU PERSONNAGE
+    protected $name;        //NOM DU PERSONNAGE
+    protected $PV;          //PV DU PERSONNAGE
+    protected $PVmax;       //PV MAX DU PERSONNAGE
+    protected $PA;          //POINTS D'ATTAQUE DU PERSONNAGE
+    protected $PD;          //POINTS DE DEFENSE DU PERSONNAGE
+    protected $currentExp;   //EXPERIENCE DU PERSONNAGE
+    protected $expForNextLevel; //EXPERIENCE NECESSAIRE POUR LE PROCHAIN NIVEAU
+    protected $level;    //NIVEAU DU PERSONNAGE
+
+    function __construct($name)     //CONSTRUCTEUR
     {
         $this->name = $name;
         $this->PVmax = 100;
@@ -78,7 +80,8 @@ class Personnage
         $this->level = $level;
     }
 
-    public function attaquer(Personnage $cible)
+    //METHODES
+    public function attaquer(Personnage $cible)     //METHODE ATTAQUER
     {
         $degats = $this->getPA() - $cible->getPD();
         if ($degats > 0) {
@@ -86,7 +89,7 @@ class Personnage
         }
     }
 
-    public function GainExp(Int $exp)
+    public function GainExp(Int $exp)       //METHODE GAIN D'EXPERIENCE
     {
         $this->currentExp += $exp;
         if ($this->currentExp >= $this->expForNextLevel) {
@@ -96,7 +99,7 @@ class Personnage
         }
     }
 
-    public function isDead()
+    public function isDead()            //METHODE VERIFIE SI LE PERSONNAGE EST MORT
     {
         if ($this->PV <= 0) {
             return true;
@@ -105,11 +108,11 @@ class Personnage
         }
     }
 
-    public function recevoirDegats($degats)
+    public function recevoirDegats($degats)     //METHODE RECOIT DES DEGATS
     {
         $this->PV -= $degats;
     }
-    public function isLevelUp()
+    public function isLevelUp()     //METHODE VERIFIE SI LE PERSONNAGE A GAGNE UN NIVEAU
     {
         if ($this->currentExp >= $this->expForNextLevel) {
             $this->level += 1;
@@ -123,7 +126,7 @@ class Personnage
         }
     }
 
-    public function afficherStats()
+    public function afficherStats()     //METHODE AFFICHE LES STATS DU PERSONNAGE
     {
         echo "Statistiques: \n";
         echo "Nom: " . $this->getName() . "\n";
@@ -134,19 +137,19 @@ class Personnage
     }
 }
 
-class Joueur extends Personnage
+class Joueur extends Personnage         //CLASSE JOUEUR
 {
-    protected $inventaire;
-    protected $or;
+    protected $inventaire;          //INVENTAIRE DU JOUEUR
+    protected $or;                  //OR DU JOUEUR
 
-    function __construct($name, $inventaire)
+    function __construct($name, $inventaire)        //CONSTRUCTEUR
     {
         parent::__construct($name);
         $this->inventaire = $inventaire;
     }
 
     // getter
-    public function getInventaire()
+    public function getInventaire()     
     {
         return $this->inventaire;
     }
@@ -157,12 +160,13 @@ class Joueur extends Personnage
         $this->inventaire = $inventaire;
     }
 
-    public function ajouterObjetInventaire($objet)
+    //METHODES
+    public function ajouterObjetInventaire($objet)      //METHODE AJOUTE UN OBJET A L'INVENTAIRE
     {
         $this->inventaire[] = $objet;
     }
 
-    public function setPlayerSave($PV, $PA, $PD, $EXP, $Niveau)
+    public function setPlayerSave($PV, $PA, $PD, $EXP, $Niveau)     //METHODE DEFINIT LES STATS DU JOUEUR
     {
         $this->PV = $PV;
         $this->PA = $PA;
@@ -171,7 +175,7 @@ class Joueur extends Personnage
         $this->level = $Niveau;
     }
 
-    public function supprimerObjetInventaire($objet)
+    public function supprimerObjetInventaire($objet)        //METHODE SUPPRIME UN OBJET DE L'INVENTAIRE
     {
         $index = array_search($objet, $this->inventaire);
 
@@ -184,7 +188,7 @@ class Joueur extends Personnage
         }
     }
 
-    public function afficherInventaire()
+    public function afficherInventaire()        //METHODE AFFICHE L'INVENTAIRE DU JOUEUR
     {
         echo "Inventaire :\n";
         foreach ($this->inventaire as $objet) {
@@ -192,7 +196,7 @@ class Joueur extends Personnage
         }
     }
 
-    public function utiliserObjetInventaire($nomObjet)
+    public function utiliserObjetInventaire($nomObjet)      //METHODE UTILISE UN OBJET DE L'INVENTAIRE
     {
         if (in_array($nomObjet, $this->inventaire)) {
             echo "Vous utilisez l'objet : " . $nomObjet . ".\n";
@@ -204,18 +208,18 @@ class Joueur extends Personnage
         }
     }
 
-    public function equiperArme($arme)
+    public function equiperArme($arme)          //METHODE EQUIPE UNE ARME
     {
-        if (in_array($arme, $this->inventaire)) {
-            $detailsArme = $this->detailsArme($arme);
-            $this->degats += $detailsArme['attaque'];
+        if (in_array($arme, $this->inventaire)) {       //SI L'ARME EST DANS L'INVENTAIRE
+            $detailsArme = $this->detailsArme($arme);       //ON RECUPERE LES DETAILS DE L'ARME
+            $this->degats += $detailsArme['attaque'];       //ON AJOUTE LES DEGATS DE L'ARME AUX DEGATS DU JOUEUR
             echo "Vous avez équipé l'arme : " . $arme . ".\n";
         } else {
             "Vous ne possédez pas l'arme : " . $arme . ".\n";
         }
     }
 
-    private function detailsArme($nomArme)
+    private function detailsArme($nomArme)      //METHODE AFFICHE LES DETAILS D'UNE ARME
     {
         $armes = [
             // "épée1" => ["attaque" => 10],
@@ -225,40 +229,40 @@ class Joueur extends Personnage
         return $armes[$nomArme];
     }
 
-    public function acheter(Arme $arme)
+    public function acheter(Arme $arme)     //METHODE ACHETE UNE ARME
     {
-        if ($this->or >= $arme->getPrix()) {
-            $this->or -= $arme->getPrix();
-            $this->ajouterObjetInventaire($arme);
-            echo "Vous avez acheté l'arme : " . $arme->getNomObjet() . ".\n";
+        if ($this->or >= $arme->getPrix()) {        //SI LE JOUEUR A ASSEZ D'OR
+            $this->or -= $arme->getPrix();          //ON RETIRE LE PRIX DE L'ARME A L'OR DU JOUEUR
+            $this->ajouterObjetInventaire($arme);    //ON AJOUTE L'ARME A L'INVENTAIRE DU JOUEUR
+            echo "Vous avez acheté l'arme : " . $arme->getNomObjet() . ".\n";       //ON AFFICHE UN MESSAGE
         } else {
             echo "Vous n'avez pas assez d'or pour acheter l'arme : " . $arme->getNomObjet() . ".\n";
         }
     }
 
-    public function gagnerExp($expGagnee)
+    public function gagnerExp($expGagnee)       //METHODE GAGNE DE L'EXPERIENCE
     {
         $this->currentExp += $expGagnee;
     }
 
-    public function gagnerOr($orGagne)
+    public function gagnerOr($orGagne)      //METHODE GAGNE DE L'OR
     {
         $this->or += $orGagne;
     }
 
-    public function gagnerObjet($objet)
+    public function gagnerObjet($objet)     //METHODE GAGNE UN OBJET
     {
         $this->ajouterObjetInventaire($objet);
     }
 }
 
-class Monstre extends Personnage
+class Monstre extends Personnage        //CLASSE MONSTRE
 {
-    protected $level;
-    protected $dropExp;
-    protected $dropGold;
+    protected $level;       //NIVEAU DU MONSTRE
+    protected $dropExp;     //EXPERIENCE DONNEE PAR LE MONSTRE
+    protected $dropGold;    //OR DONNE PAR LE MONSTRE
 
-    function __construct($name, $PV, $PA, $PD, $level, $dropExp, $dropGold)
+    function __construct($name, $PV, $PA, $PD, $level, $dropExp, $dropGold)     //CONSTRUCTEUR
     {
         parent::__construct($name);
         $this->PV = $PV * $level;
@@ -270,7 +274,7 @@ class Monstre extends Personnage
     }
 
     // getter
-    public function getLevel()
+    public function getLevel()      
     {
         return $this->level;
     }
@@ -282,17 +286,17 @@ class Monstre extends Personnage
     }
 }
 
-class Objet
+class Objet             //CLASSE OBJET
 {
-    protected $nomObjet;
+    protected $nomObjet;        //NOM DE L'OBJET    
 
-    protected $typeObjet;
+    protected $typeObjet;       //TYPE D'OBJET
 
-    protected $bonus;
+    protected $bonus;           //BONUS DE L'OBJET
 
-    protected $malus;
+    protected $malus;           //MALUS DE L'OBJET
 
-    function __construct($nomObjet, $typeObjet, $bonus, $malus)
+    function __construct($nomObjet, $typeObjet, $bonus, $malus)     //CONSTRUCTEUR
     {
         $this->nomObjet = $nomObjet;
         $this->typeObjet = $typeObjet;
@@ -347,12 +351,13 @@ class Objet
         $this->malus = $malus;
     }
 
-    public function afficherObjet()
+    //METHODES
+    public function afficherObjet()     //METHODE AFFICHE LES DETAILS DE L'OBJET
     {
         echo "Nom de l'objet : " . $this->nomObjet . ", Type d'objet : " . $this->typeObjet . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . "\n";
     }
 
-    public function utiliserObjet(Personnage $cible)
+    public function utiliserObjet(Personnage $cible)        //METHODE UTILISE L'OBJET
     {
         if ($this->typeObjet == "arme") {
             $cible->setPA($cible->getPA() + $this->bonus);
@@ -363,15 +368,15 @@ class Objet
     }
 }
 
-class Arme extends Objet
+class Arme extends Objet        //CLASSE ARME
 {
 
-    protected $typeArme;
-    protected $effet;
-    protected $degats;
-    protected $nivRequis;
-    protected $prix;
-    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet, $nivRequis, $prix)
+    protected $typeArme;        //TYPE D'ARME
+    protected $effet;           //EFFET DE L'ARME
+    protected $degats;         //DEGATS DE L'ARME
+    protected $nivRequis;       //NIVEAU REQUIS POUR UTILISER L'ARME
+    protected $prix;            //PRIX DE L'ARME
+    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet, $nivRequis, $prix)      //CONSTRUCTEUR
     {
         parent::__construct($nomObjet, $typeObjet, $bonus, $malus);
         $this->typeArme = $typeArme;
@@ -432,12 +437,12 @@ class Arme extends Objet
         $this->prix = $prix;
     }
 
-    public function afficherArme()
+    public function afficherArme()      //METHODE AFFICHE LES DETAILS DE L'ARME
     {
         echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Niveau Requis : " . $this->nivRequis . "\n";
     }
 
-    public function utiliserObjet(Personnage $cible)
+    public function utiliserObjet(Personnage $cible)        //METHODE UTILISE L'ARME
     {
         if ($this->typeObjet == "arme") {
             $cible->setPA($cible->getPA() + $this->bonus);
@@ -445,23 +450,23 @@ class Arme extends Objet
         }
     }
 
-    public function __toString()
+    public function __toString()        //METHODE AFFICHE LES DETAILS DE L'ARME ET TRANSFORME LES DONNEES EN STRING
     {
         return "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Prix : " . $this->prix . ", Niveau Requis : " . $this->nivRequis;
     }
 }
 
-class Inventaire
+class Inventaire        //CLASS INVENTAIRE
 {
-    protected $arme;
+    protected $arme;    //ARME DE L'INVENTAIRE
 
-    function __construct($arme)
+    function __construct($arme)    //CONSTRUCTEUR
     {
         $this->arme = $arme;
     }
 
     // getter
-    public function getArme()
+    public function getArme()   
     {
         return $this->arme;
     }
