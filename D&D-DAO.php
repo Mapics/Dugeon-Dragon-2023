@@ -1,5 +1,6 @@
 <?php
-class DD_DAO {
+class DD_DAO
+{
     protected $bdd;
 
     public function __construct($bdd)
@@ -39,30 +40,30 @@ class DD_DAO {
     public function salleAleatoire()
     {
         $rand = rand(0, 100);
-        switch ($rand) {
-            case 0 < 50:
-                // TODO requete vers la bdd pour 'new' une vrais salle a return
+        switch (true) {
+            case $rand < 50:
                 echo "salle combat";
-                $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
+                $salleCombat = new SalleCombat('Combat', 'un très dangereux monstre va apparaître', new Monstre('Pikachu', 1));
                 $salleCombat->afficherInformations();
                 return $salleCombat;
-            case 51 < 75:
+            case $rand >= 50 && $rand < 75:
                 echo "salle marchand";
                 $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
                 $salleMarchand->afficherInformations();
                 return $salleMarchand;
-            case 76 < 90:
-                echo "salle enigme";
-                $salleEnigme = new SalleEnigme('Enigme', 'une enigme vous attend', 'Quel est la couleur du cheval blanc d henri IV ?');
+            case $rand >= 75 && $rand < 90:
+                echo "salle énigme";
+                $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
                 $salleEnigme->afficherInformations();
                 return $salleEnigme;
-            case 91 < 95;
+            case $rand >= 90 && $rand < 95:
                 echo "salle boss";
-                $salleBoss = new SalleBoss('Boss', 'un boss vous attend', "new Monstre('Boss', 10)");
+                $salleBoss = new SalleBoss('Boss', 'un boss vous attend', new Monstre('Boss', 10));
                 $salleBoss->afficherInformations();
                 return $salleBoss;
-            case 96 < 100:
+            case $rand >= 95 && $rand <= 100:
                 echo "salle vide";
+                return null;
             default:
                 echo "erreur dans la sélection de la salle";
                 break;
