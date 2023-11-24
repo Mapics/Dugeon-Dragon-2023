@@ -212,6 +212,16 @@ class Joueur extends Personnage
         return $armes[$nomArme];
     }
 
+    public function acheter(Arme $arme) {
+        if ($this->or >= $arme->getPrix()) {
+            $this->or -= $arme->getPrix();
+            $this->ajouterObjetInventaire($arme);
+            echo "Vous avez acheté l'arme : " . $arme->getNomObjet() . ".\n";
+        } else {
+            echo "Vous n'avez pas assez d'or pour acheter l'arme : " . $arme->getNomObjet() . ".\n";
+        }
+    }
+
     public function gagnerExp($expGagnee)
     {
         $this->currentExp += $expGagnee;

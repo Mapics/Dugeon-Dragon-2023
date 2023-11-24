@@ -199,7 +199,7 @@ class SalleMarchand extends Salle
     public function setArme2($arme2) {
         $this->arme2 = $arme2;
     }
-    
+
     public function afficherInformations() {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
