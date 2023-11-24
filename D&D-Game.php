@@ -47,9 +47,11 @@ class DD_Game
         $choix = readline();
         switch ($choix) {
             case 1:
-                echo "Chissisez votre pseudo :\n";
+                echo "Choissisez votre pseudo :\n";
                 $name = readline();
-                $this->joueur = new Joueur($name, array());
+                $this->joueur = new Joueur($name, new Inventaire(""));
+                $this->ddDAO->ajouterJoueurBDD($this->joueur);
+                $this->ddDAO->ajouterInventaireBDD($this->joueur->getInventaire(), $this->joueur);
                 $this->Jouer();
                 break;
             case 2:
@@ -79,7 +81,7 @@ class DD_Game
                     $this->seDeplacer();
                     break;
                 case 4:
-                    $this->ddDAO->Save($this->joueur);
+                    $this->ddDAO->Sauvegarder($this->joueur);
                     break;
                 case 5:
                     echo "A bientot !\n";

@@ -20,8 +20,25 @@ class DD_DAO
         }
     }
 
+<<<<<<< Updated upstream
     public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
     {
+=======
+    public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur) {
+        try {
+            $requete = $this->bdd->prepare("INSERT INTO inventaire (Id_arme, Id_perso) VALUES (?, ?)");
+            $requete->execute([$inventaire->getArme()->getId(), $joueur->getId()]);
+        
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur d'ajout d'inventaire: " . $e->getMessage();
+            return false;
+        }
+
+    }
+
+    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
+>>>>>>> Stashed changes
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
@@ -165,12 +182,17 @@ class DD_DAO
         }
     }
 
+<<<<<<< Updated upstream
     public function Sauvegarder()
     {
+=======
+    public function Sauvegarder(Personnage $joueur) {
+>>>>>>> Stashed changes
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
-            $requete->execute();
+            $requete->execute([$joueur->getName()]);
             $result = $requete->fetchAll(PDO::FETCH_ASSOC);
+<<<<<<< Updated upstream
 
             $IdPerso = $result['Id_perso'];
 
@@ -182,6 +204,27 @@ class DD_DAO
 
             $requete3 = $this->bdd->prepare("INSERT INTO sauvegarde (Id_perso, Id_inventaire) VALUES (?, ?)");
             $requete3->execute([$IdPerso, $IdInventaire]);
+=======
+            
+            if ($result) {
+                $IdPerso = $result['Id_perso'];
+    
+                $requete2 = $this->bdd->prepare("SELECT * FROM inventaire WHERE Id_perso = ?");
+                $requete2->execute([$IdPerso]);
+                $result2 = $requete2->fetch(PDO::FETCH_ASSOC); // Utilisez fetch pour récupérer une seule ligne
+    
+                if ($result2) {
+                    $IdInventaire = $result2['Id_inventaire'];
+    
+                    $requete3 = $this->bdd->prepare("INSERT INTO sauvegarde (Id_perso, Id_inventaire) VALUES (?, ?)");
+                    $requete3->execute([$IdPerso, $IdInventaire]);
+                } else {
+                    echo "Erreur: Aucun inventaire trouvé.";
+                }
+            } else {
+                echo "Erreur: Aucun personnage trouvé.";
+            }
+>>>>>>> Stashed changes
         } catch (PDOException $e) {
             echo "Erreur lors de la sauvegarde : " . $e->getMessage();
             return NULL;
