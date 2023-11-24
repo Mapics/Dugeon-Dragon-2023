@@ -61,8 +61,7 @@ class DD_Game
         }
     }
 
-    public function Jouer()
-    {
+    public function Jouer() {
         $ingame = true;
         while ($ingame) {
             // $this->isGameOver();
@@ -124,7 +123,7 @@ class DD_Game
                 }
                 break;
             case 'Marchand':
-                // $this->joueur->acheter($this->currentSalle->getMarchand());
+                $this->talkMarchand($this->currentSalle->getMarchand());
                 break;
             case 'Enigme':
                 $this->repondreEnigme($this->currentSalle->getEnigme());
@@ -158,6 +157,18 @@ class DD_Game
                     $this->joueur->afficherInventaire();
                     break;
             }
+        }
+    }
+
+    public function talkMarchand(Salle $marchand) {
+        $choix = readline();
+        switch ($choix) {
+            case 1:
+                $this->joueur->acheter($marchand->getArme1());
+                break;
+            case 2:
+                $this->joueur->acheter($marchand->getArme2());
+                break;
         }
     }
 
