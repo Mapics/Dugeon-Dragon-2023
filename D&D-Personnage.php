@@ -341,15 +341,16 @@ class Arme extends Objet
     protected $typeArme;
     protected $effet;
     protected $degats;
-
     protected $nivRequis;
-    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet, $nivRequis)
+    protected $prix;
+    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet, $nivRequis, $prix)
     {
         parent::__construct($nomObjet, $typeObjet, $bonus, $malus);
         $this->typeArme = $typeArme;
         $this->effet = $effet;
         $this->degats = $degats;
         $this->nivRequis = $nivRequis;
+        $this->prix = $prix;
     }
 
     //getter
@@ -373,6 +374,10 @@ class Arme extends Objet
         return $this->nivRequis;
     }
 
+    public function getPrix()
+    {
+        return $this->prix;
+    }
     //setter
     public function setDegats($degats)
     {
@@ -394,6 +399,11 @@ class Arme extends Objet
         $this->nivRequis = $nivRequis;
     }
 
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+    }
+
     public function afficherArme()
     {
         echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Niveau Requis : " . $this->nivRequis . "\n";
@@ -409,7 +419,7 @@ class Arme extends Objet
 
     public function __toString()
     {
-        return "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Niveau Requis : " . $this->nivRequis;
+        return "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Prix : " . $this->prix . ", Niveau Requis : " . $this->nivRequis;
     }
 }
 

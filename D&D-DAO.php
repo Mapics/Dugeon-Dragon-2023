@@ -8,6 +8,35 @@ class DD_DAO
         $this->bdd = $bdd;
     }
 
+    public function ajouterJoueurBDD(Joueur $joueur) {
+        try {
+            $requete = $this->bdd->prepare("INSERT INTO personnages (nom, PV, PA, PD, EXP, Niveau) VALUES (?, ?, ?, ?, ?, ?)");
+            $requete->execute([$joueur->getName(), $joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel()]);
+            return true;
+        } catch (PDOException $e) {
+            echo "Erreur d'ajout de personnage: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function verifJoueurExistant($player_name) {
+        try {
+            $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
+            $requete->execute([$player_name]);
+            $result = $requete->fetchAll(PDO::FETCH_ASSOC);
+            $joueur = new Joueur($result[0]['nom'], $result[0]['PV'], $result[0]['PA'], $result[0]['PD'], $result[0]['EXP'], $result[0]['Niveau']);
+            if(count($result) > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            echo "Erreur de recherche de personnage: " . $e->getMessage();
+            return false;
+            
+        }
+    }
+
     public function ajouterArme($nom, $degat, $niv_requis)
     {
         $prep = "INSERT INTO armes (Nom_arme, Degat, Niv_requis) VALUES (?, ?, ?)";
@@ -39,7 +68,7 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = rand(90, 95);
+        $rand = rand(50, 75);
         switch (true) {
             case $rand < 50:
                 try {
@@ -76,7 +105,7 @@ class DD_DAO
 
                         $NouvelleArme = $newArme->fetch(PDO::FETCH_ASSOC);
                         
-                        $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "", $NouvelleArme['Niv_requis']);
+                        $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "test", $NouvelleArme['Niv_requis'], $NouvelleArme['Prix']); 
                     }
                     
                     $salleMarchand = new SalleMarchand('Marchand', 'Un marchand vous propose des objets', $MarchandArmes[0], $MarchandArmes[1]);

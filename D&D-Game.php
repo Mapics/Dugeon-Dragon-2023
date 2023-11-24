@@ -65,6 +65,7 @@ class DD_Game
     {
         $ingame = true;
         while ($ingame) {
+            // $this->isGameOver();
             $this->afficherMenu();
             $choix = readline();
             switch ($choix) {
@@ -72,7 +73,7 @@ class DD_Game
                     $this->joueur->afficherStats();
                     break;
                 case 2:
-                    $this->joueur->getInventaire()->afficherInventaire();
+                    $this->joueur->afficherInventaire();
                     break;
                 case 3:
                     $this->seDeplacer();
