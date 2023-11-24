@@ -214,35 +214,45 @@ class DD_DAO
         }
     }
 
-    public function getPlayerIDfromName(String $name) {
+    // UTILE POUR LA SAUVEGARDE
+    public function getPlayerIDfromName(String $name)
+    {
         try {
+            // SELECTIONNE L'ID D'UN PERSONNAGE A PARTIR DE SON NOM
             $requete = $this->bdd->prepare("SELECT id_perso FROM personnages WHERE nom = ?");
             $requete->execute([$name]);
             $result = $requete->fetch(PDO::FETCH_ASSOC);
+            // RETOURNE L'ID DU PERSONNAGE
             return $result['id_perso'];
         } catch (PDOException $e) {
+            // SI ERREUR
             echo "Erreur de recherche de personnage: " . $e->getMessage();
             return NULL;
         }
     }
 
-    public function Sauvegarder(Personnage $joueur) {
+    // FONCTION POUR SAUVEGARDER LA PARTIE
+    public function Sauvegarder(Personnage $joueur)
+    {
         try {
             try {
+                // RECUPERE DE L'INVENTAIRE DU JOUEUR
                 $requete2 = $this->bdd->prepare("SELECT id_inventaire FROM inventaire WHERE Id_perso = ?");
                 $requete2->execute([$this->getPlayerIDfromName($joueur->getName())]);
                 $result = $requete2->fetch(PDO::FETCH_ASSOC);
                 $id_inventaire = $result['id_inventaire'];
             } catch (PDOException $e) {
+                // SI ERREUR
                 echo "Erreur de recherche d'inventaire: " . $e->getMessage();
                 return false;
             }
 
+            // MISE A JOUR DES DONNEES DU PERSONNAGE ET SON INVENTAIRE DANS LA BASE DE DONNEES
             $requete = $this->bdd->prepare("UPDATE personnages SET PV = ?, PA = ?, PD = ?, EXP = ?, Niveau = ?, id_inventaire = ? WHERE nom = ?");
             $requete->execute([$joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel(), $id_inventaire, $joueur->getName()]);
-
             return true;
         } catch (PDOException $e) {
+            // SI ERREUR
             echo "Erreur de sauvegarde de personnage: " . $e->getMessage();
             return false;
         }
