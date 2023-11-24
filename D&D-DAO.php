@@ -62,10 +62,6 @@ class DD_DAO
                 }
                 // $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
                 // $salleCombat->afficherInformations();
-                
-            case 51 < 75:
-                $salleCombat = new SalleCombat('Combat', 'un très dangereux monstre va apparaître', new Monstre('Pikachu', 1));
-                return $salleCombat;
             case $rand >= 50 && $rand < 75:
                 echo "salle marchand";
                 $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
