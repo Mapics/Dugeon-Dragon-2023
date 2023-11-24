@@ -105,26 +105,26 @@ class DD_Game
                 
                 break;
             case 'Combat' :
-                $this->Combattre($this->joueur, $this->currentSalle->getMonstre());
+                $this->Combattre($this->currentSalle->getMonstre());
                 if ($this->currentSalle->getMonstre()->isDead()) {
                     echo "est mort \n";
                     // TODO
                     // $this->joueur->gagnerExp($salle->getMonstre()->getExp());
                     // $this->joueur->gagnerOr($salle->getMonstre()->getOr());
                     // $this->joueur->gagnerObjet($salle->getMonstre()->getObjet());
-                    // $this->joueur->LevelUp();
+                    // $this->joueur->isLevelUp();
                     $this->joueur->afficherStats();
                 }
                 break;
             case 'Marchand' :
-                $this->joueur->acheter($salle->getMarchand());
+                $this->joueur->acheter($this->currentSalle->getMarchand());
                 break;
             case 'Enigme' :
-                $this->joueur->repondreEnigme($salle->getEnigme());
+                $this->joueur->repondreEnigme($this->currentSalle->getEnigme());
                 break;
             case 'Boss' :
-                $this->joueur->attaquer($salle->getBoss());
-                if ($salle->getBoss()->isDead()) {
+                $this->joueur->attaquer($this->currentSalle->getBoss());
+                if ($this->currentSalle->getBoss()->isDead()) {
                     // TODO
                     // $this->joueur->gagnerExp($salle->getBoss()->getExp());
                     // $this->joueur->gagnerOr($salle->getBoss()->getOr());
@@ -136,28 +136,27 @@ class DD_Game
         }
     }
 
-    public function Combattre(Personnage $joueur, Personnage $monstre) {
-        while (!$this->currentSalle->getMonstre()->isDead()) {
-
-            $joueur->afficherStats();
+    public function Combattre(Personnage $monstre) {
+        while (!$this->currentSalle->getMonstre()->isDead() && $this->joueur->isDead()) {
+            $this->joueur->afficherStats();
             $monstre->afficherStats();
-            // TODO VVV
-            // $joueur->afficheAttaque();
+            $this->afficheAttaque();
             $choix = readline();
             switch ($choix) {
                 case 1:
-                    $joueur->attaquer($monstre);
-                    $monstre->attaquer($joueur);
+                    $this->joueur->attaquer($monstre);
+                    $monstre->attaquer($this->joueur);
                     break;
                 case 2:
-                    $joueur->afficherStats();
+                    $this->joueur->afficherInventaire();
                     break;
-                }
             }
-    
+        }
     }
+
     public function afficheAttaque() {
         echo "1. Attaquer\n";
-        echo "2. Voirs stats\n";
+        echo "2. Utiliser un objet\n";
+        echo "3. Fuir\n";
     }
 }

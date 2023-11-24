@@ -1,8 +1,8 @@
 <?php 
 $config = array(
     'hote' => 'localhost',
-    'utilisateur' => 'ddprojet',
-    'motDePasse' => 'projet',
+    'utilisateur' => 'dd_root',
+    'motDePasse' => 'password',
     'nomDeLaBase' => 'ddprojet',
     'port' => '3306',
 );

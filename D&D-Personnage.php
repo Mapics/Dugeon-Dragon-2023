@@ -110,13 +110,18 @@ class Personnage
     {
         $this->PV -= $degats;
     }
-    public function LevelUp()
+    public function isLevelUp()
     {
-        $this->level += 1;
-        $this->PV = $this->PV * 1.5;
-        $this->PA = $this->PA * 1.5;
-        $this->PD = $this->PD * 1.5;
-        $this->expForNextLevel = $this->expForNextLevel * 1.5;
+        if ($this->currentExp >= $this->expForNextLevel) {
+            $this->level += 1;
+            $this->PV = $this->PV * 1.5;
+            $this->PA = $this->PA * 1.5;
+            $this->PD = $this->PD * 1.5;
+            $this->expForNextLevel = $this->expForNextLevel * 1.5;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function afficherStats()
