@@ -201,11 +201,23 @@ class DD_DAO
         }
     }
 
+    public function getPlayerIDfromName(String $name) {
+        try {
+            $requete = $this->bdd->prepare("SELECT id_perso FROM personnages WHERE nom = ?");
+            $requete->execute([$name]);
+            $result = $requete->fetch(PDO::FETCH_ASSOC);
+            return $result['id_perso'];
+        } catch (PDOException $e) {
+            echo "Erreur de recherche de personnage: " . $e->getMessage();
+            return NULL;
+        }
+    }
+
     public function Sauvegarder(Personnage $joueur) {
         try {
             try {
                 $requete2 = $this->bdd->prepare("SELECT id_inventaire FROM inventaire WHERE Id_perso = ?");
-                $requete2->execute([$joueur->getId()]);
+                $requete2->execute([$this->getPlayerIDfromName($joueur->getName())]);
                 $result = $requete2->fetch(PDO::FETCH_ASSOC);
                 $id_inventaire = $result['id_inventaire'];
             } catch (PDOException $e) {

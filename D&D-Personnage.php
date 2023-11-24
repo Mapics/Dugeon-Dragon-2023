@@ -321,6 +321,10 @@ class Objet
         return $this->malus;
     }
 
+    public function getId() {
+        return $this->id;
+    }
+
     // setter
 
     public function setNomObjet($nomObjet)
