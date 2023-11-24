@@ -11,13 +11,16 @@ class DD_Game
     }
 
     // getter
-    public function getDdDAO() {
+    public function getDdDAO()
+    {
         return $this->ddDAO;
-    }  
-    public function getJoueur() {
+    }
+    public function getJoueur()
+    {
         return $this->joueur;
     }
-    public function getCurrentSalle() {
+    public function getCurrentSalle()
+    {
         return $this->currentSalle;
     }
 
@@ -58,7 +61,8 @@ class DD_Game
         }
     }
 
-    public function Jouer() {
+    public function Jouer()
+    {
         $ingame = true;
         while ($ingame) {
             $this->afficherMenu();
@@ -84,12 +88,14 @@ class DD_Game
         }
     }
 
-    public function seDeplacer() {
+    public function seDeplacer()
+    {
         $this->currentSalle = $this->ddDAO->salleAleatoire();
         $this->SalleInteraction();
     }
 
-    public function afficherMenu() {
+    public function afficherMenu()
+    {
         echo "1. Afficher les informations du personnage\n";
         echo "2. Afficher les informations de l'inventaire\n";
         echo "3. Se déplacer\n";
@@ -97,32 +103,40 @@ class DD_Game
         echo "5. Quitter\n";
     }
 
-    public function SalleInteraction() {
+    public function SalleInteraction()
+    {
         $this->currentSalle->afficherInformations();
         $type = $this->currentSalle->getType();
         switch ($type) {
             case 'Vide':
-                
+                echo "La salle dans laquelle vous venez d'entrer est totalement vide...";
                 break;
-            case 'Combat' :
+            case 'Combat':
                 $this->Combattre($this->joueur, $this->currentSalle->getMonstre());
                 if ($this->currentSalle->getMonstre()->isDead()) {
                     echo "est mort \n";
-                    // TODO
-                    // $this->joueur->gagnerExp($salle->getMonstre()->getExp());
-                    // $this->joueur->gagnerOr($salle->getMonstre()->getOr());
-                    // $this->joueur->gagnerObjet($salle->getMonstre()->getObjet());
-                    // $this->joueur->LevelUp();
+                    $monstre = $this->currentSalle->getMonstre();
+
+                    $expGagnee = $monstre->getExp();
+                    $orGagne = $monstre->getOr();
+                    $objetGagne = $monstre->getObjet();
+
+                    $this->joueur->gagnerExp($expGagnee);
+                    $this->joueur->gagnerOr($orGagne);
+                    $this->joueur->gagnerObjet($objetGagne);
+                    $this->joueur->LevelUp();
+                    }
+
                     $this->joueur->afficherStats();
                 }
                 break;
-            case 'Marchand' :
+            case 'Marchand':
                 $this->joueur->acheter($salle->getMarchand());
                 break;
-            case 'Enigme' :
+            case 'Enigme':
                 $this->joueur->repondreEnigme($salle->getEnigme());
                 break;
-            case 'Boss' :
+            case 'Boss':
                 $this->joueur->attaquer($salle->getBoss());
                 if ($salle->getBoss()->isDead()) {
                     // TODO
@@ -136,7 +150,8 @@ class DD_Game
         }
     }
 
-    public function Combattre(Personnage $joueur, Personnage $monstre) {
+    public function Combattre(Personnage $joueur, Personnage $monstre)
+    {
         while (!$this->currentSalle->getMonstre()->isDead()) {
 
             $joueur->afficherStats();
@@ -152,11 +167,11 @@ class DD_Game
                 case 2:
                     $joueur->afficherStats();
                     break;
-                }
             }
-    
+        }
     }
-    public function afficheAttaque() {
+    public function afficheAttaque()
+    {
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
     }
