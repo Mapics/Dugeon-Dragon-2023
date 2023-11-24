@@ -1,13 +1,16 @@
 <?php
 class DD_DAO
 {
+    // VARIABLE POUR CONNEXION A LA BASE DE DONNEES
     protected $bdd;
 
     public function __construct($bdd)
     {
+        // POUR CONNEXION A LA BASE DE DONNEES
         $this->bdd = $bdd;
     }
 
+    // AJOUTER UN JOUEUR A LA BASE DE DONNEES
     public function ajouterJoueurBDD(Joueur $joueur)
     {
         try {
@@ -20,6 +23,7 @@ class DD_DAO
         }
     }
 
+    // VERIFIER SI UN JOUEUR EST DEJA PRESENT DANS LA BASE DE DONNEES
     public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
     {
         try {
@@ -41,6 +45,7 @@ class DD_DAO
         }
     }
 
+    // CRUD ARME EXEMPLE
     public function ajouterArme($nom, $degat, $niv_requis)
     {
         $prep = "INSERT INTO armes (Nom_arme, Degat, Niv_requis) VALUES (?, ?, ?)";
@@ -70,95 +75,116 @@ class DD_DAO
         $requete->execute([$id]);
     }
 
+    // GENERER UNE SALLE ALEATOIRE PARMI COMBAT, VIDE, BOSS, MARCHAND, ENIGME
     public function salleAleatoire()
     {
         $rand = rand(50, 75);
         switch (true) {
+                // 50% SALLE COMBAT
             case $rand < 50:
                 try {
+                    // CHOISIR UN MONSTRE ALEATOIRE DE LA BASE DE DONNEES DANS LA TABLE MONSTRE AVEC TYPE NORMAL
                     $newMonstre = $this->bdd->prepare("SELECT * FROM Monstre WHERE Type = 'normal' ORDER BY RAND() LIMIT 1");
                     $newMonstre->execute();
-
                     $monstre = $newMonstre->fetch(PDO::FETCH_ASSOC);
 
+                    // AJOUTE ALEATOIRE SUR NIVEAU ET PUISSANCE MONSTRE
                     $randLvl = rand(1, 5);
 
+                    // GENERER UN OBJET SALLECOMBAT POUR GERER LE COMBAT ENTRE LE JOUEUR ET LE MONSTRE SELECTIONNE
                     $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', new Monstre($monstre['Nom'], $monstre['PV'], $monstre['PA'], $monstre['PD'], $randLvl, $monstre['Exp_donne'], $monstre['Gold_donne']));
 
                     // $salleCombat->afficherInformations();
 
+                    // RETOURNE SALLECOMBAT
                     return $salleCombat;
                 } catch (PDOException $e) {
+                    // SI ERREUR
                     echo "Erreur lors de la récupération du monstre: " . $e->getMessage();
                     return NULL;
                 }
 
+                // 25% SALLE MARCHAND
             case $rand >= 50 && $rand < 75:
                 try {
+                    // CHOISIR DEUX ARMES ALEATOIRES DE LA BASE DE DONNEES PROPOSEES PAR LE MARCHAND
                     $newMarchand = $this->bdd->prepare("SELECT * FROM Marchand ORDER BY RAND() LIMIT 2");
                     $newMarchand->execute();
 
                     $marchands = $newMarchand->fetchAll(PDO::FETCH_ASSOC);
 
+                    // BOUCLE SUR LES DEUX ARMES SELECTIONNEES DE MANIERE ALEATOIRE
                     foreach ($marchands as $key => $marchand) {
                         $ArmeId = $marchand['Id_arme'];
+
+                        // SELECTIONNE LES DETAILS DE CHAQUE ARME
                         $newArme = $this->bdd->prepare("SELECT * FROM armes WHERE Id_arme = $ArmeId");
                         $newArme->execute();
-
-
-
                         $NouvelleArme = $newArme->fetch(PDO::FETCH_ASSOC);
 
+                        // CREER UN OBJET ARME POUR CHAQUE ARME SELECTIONEE DE MANIERE ALEATOIRE
                         $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme", $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "test", $NouvelleArme['Niv_requis'], $NouvelleArme['Prix']);
                     }
 
+                    // CREER UN OBJET SALLEMARCHAND AVEC DES DEUX OBJETS ARME SELECTIONNES
                     $salleMarchand = new SalleMarchand('Marchand', 'Un marchand vous propose des objets', $MarchandArmes[0], $MarchandArmes[1]);
 
+                    // RETOURNE SALLEMARCHAND
                     return $salleMarchand;
                 } catch (PDOException $e) {
+                    // SI ERREUR
                     echo "Erreur lors de la récupération du marchand: " . $e->getMessage();
                     return false;
                 }
 
+                // 15% SALLE ENIGME
             case $rand >= 75 && $rand < 90:
                 echo "salle énigme";
-
+                // CHOISIR UNE ENIGME ALEATOIRE A PARTIR DE LA BASE DE DONNEE
                 try {
                     $newEnigme = $this->bdd->prepare("SELECT * FROM Enigme ORDER BY RAND() LIMIT 1");
                     $newEnigme->execute();
-
                     $enigme = $newEnigme->fetch(PDO::FETCH_ASSOC);
 
+                    // CREER UN OBJET SALLEENIGME AVEC REPONSES BONNE REPONSE ET ENNONCE
                     $salleEnigme = new SalleEnigme('Énigme', 'Une énigme vous attend', $enigme['Enigme'], $enigme['Rep1'], $enigme['Rep2'], $enigme['Rep3'], $enigme['Bonne_rep']);
 
+                    // RETOURNE SALLEENIGME
                     return $salleEnigme;
                 } catch (PDOException $e) {
+                    // SI ERREUR
                     echo "Erreur lors de la récupération de l'énigme: " . $e->getMessage();
                     return false;
                 }
-                // $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
-                // return $salleEnigme;
+
+                // 5% SALLE BOSS
             case $rand >= 90 && $rand < 95:
                 try {
+                    // CHOISIR UN BOSS ALEATOIRE DE LA BASE DE DONNEE DANS LA TABLE MONSTRE PARMI LES MONSTRES AVEC TYPE BOSS
                     $newBoss = $this->bdd->prepare("SELECT * FROM Monstre WHERE Type = 'boss' ORDER BY RAND() LIMIT 1");
                     $newBoss->execute();
-
                     $Boss = $newBoss->fetch(PDO::FETCH_ASSOC);
 
+                    // AJOUTE ALEATOIRE SUR NIVEAU ET PUISSANCE BOSS
                     $randLvl = rand(1, 5);
 
+                    // CREER SALLEBOSS COMME UN OBJET SALLECOMBAT AVEC UN MONSTRE TYPE BOSS
                     $salleBoss = new SalleCombat('Combat', 'Un très dangereux Boss va apparaitre', new Monstre($Boss['Nom'], $Boss['PV'], $Boss['PA'], $Boss['PD'], $randLvl, $Boss['Exp_donne'], $Boss['Gold_donne']));
 
-                    // $salleCombat->afficherInformations();
-
+                    // RETOURNE SALLEBOSS
                     return $salleBoss;
                 } catch (PDOException $e) {
+                    // SI ERREUR
                     echo "Erreur lors de la récupération du Boss : " . $e->getMessage();
                     return NULL;
                 }
+
+                // 5% SALLE VIDE RIEN DE SPECIAL LA PROGRESSION CONTINUE
             case $rand >= 95 && $rand <= 100:
                 echo "Vous êtes tombé sur une salle vide !";
                 return null;
+
+                // SI ERREUR
             default:
                 echo "erreur dans la sélection de la salle";
                 break;
