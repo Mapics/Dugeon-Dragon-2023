@@ -194,7 +194,7 @@ class Joueur extends Personnage
     {
         if (in_array($arme, $this->inventaire)) {
             $detailsArme = $this->detailsArme($arme);
-            $this->degats += $detailsArme["attaque"];
+            $this->degats += $detailsArme['attaque'];
             echo "Vous avez équipé l'arme : " . $arme . ".\n";
         } else {
             "Vous ne possédez pas l'arme : " . $arme . ".\n";
@@ -204,7 +204,7 @@ class Joueur extends Personnage
     private function detailsArme($nomArme)
     {
         $armes = [
-            // "épée1" => [attaque" => 10],
+            // "épée1" => ["attaque" => 10],
             // "épée2" => ["attaque" => 15],
         ];
 
