@@ -114,12 +114,11 @@ class DD_Game
             case 'Combat' :
                 $this->Combattre($this->currentSalle->getMonstre());
                 if ($this->currentSalle->getMonstre()->isDead()) {
-                    echo "est mort \n";
-                    // TODO
-                    // $this->joueur->gagnerExp($salle->getMonstre()->getExp());
-                    // $this->joueur->gagnerOr($salle->getMonstre()->getOr());
-                    // $this->joueur->gagnerObjet($salle->getMonstre()->getObjet());
-                    // $this->joueur->isLevelUp();
+                    echo $this->currentSalle->getMonstre()->getNom() . "est mort \n";
+                    $this->joueur->gagnerExp($this->currentSalle->getMonstre()->getExp());
+                    $this->joueur->gagnerOr($this->currentSalle->getMonstre()->getOr());
+                    $this->joueur->gagnerObjet($this->currentSalle->getMonstre()->getObjet());
+                    $this->joueur->isLevelUp();
                     $this->joueur->afficherStats();
                 }
                 break;
