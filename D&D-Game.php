@@ -111,7 +111,7 @@ class DD_Game
             case 'Vide':
                 echo "La salle dans laquelle vous venez d'entrer est totalement vide...";
                 break;
-            case 'Combat' :
+            case 'Combat':
                 $this->Combattre($this->currentSalle->getMonstre());
                 if ($this->currentSalle->getMonstre()->isDead()) {
                     echo "est mort \n";
@@ -122,29 +122,28 @@ class DD_Game
                     $this->joueur->afficherStats();
                 }
                 break;
-            case 'Marchand' :
+            case 'Marchand':
                 $this->joueur->acheter($this->currentSalle->getMarchand());
                 break;
-            case 'Enigme' :
+            case 'Enigme':
                 $this->joueur->repondreEnigme($this->currentSalle->getEnigme());
                 break;
-            case 'Boss' :
+            case 'Boss':
                 $this->joueur->attaquer($this->currentSalle->getBoss());
                 if ($this->currentSalle->getBoss()->isDead()) {
-                    // TODO
-                    // $this->joueur->gagnerExp($salle->getBoss()->getExp());
-                    // $this->joueur->gagnerOr($salle->getBoss()->getOr());
-                    // $this->joueur->gagnerObjet($salle->getBoss()->getObjet());
-                    // $this->joueur->LevelUp();
+                    $this->joueur->gagnerExp($this->currentSalle->getMonstre()->getExp());
+                    $this->joueur->gagnerOr($this->currentSalle->getMonstre()->getOr());
+                    $this->joueur->gagnerObjet($this->currentSalle->getMonstre()->getObjet());
+                    $this->joueur->LevelUp();
                     $this->joueur->afficherStats();
                 }
                 break;
         }
     }
 
-    public function Combattre(Personnage $monstre) {
-        echo "Un monstre vous attaque !\n";
-        while (!$this->currentSalle->getMonstre()->isDead() && !$this->joueur->isDead()) {
+    public function Combattre(Personnage $monstre)
+    {
+        while (!$this->currentSalle->getMonstre()->isDead() && $this->joueur->isDead()) {
             $this->joueur->afficherStats();
             $monstre->afficherStats();
             $this->afficheAttaque();
@@ -161,7 +160,8 @@ class DD_Game
         }
     }
 
-    public function afficheAttaque() {
+    public function afficheAttaque()
+    {
         echo "1. Attaquer\n";
         echo "2. Utiliser un objet\n";
         echo "3. Fuir\n";

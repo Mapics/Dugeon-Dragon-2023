@@ -74,11 +74,6 @@ class Personnage
         $this->level = $level;
     }
 
-    public function setSave()
-    {
-        //TODO
-    }
-
     public function attaquer(Personnage $cible)
     {
         $degats = $this->getPA() - $cible->getPD();
@@ -217,15 +212,18 @@ class Joueur extends Personnage
         return $armes[$nomArme];
     }
 
-    public function gagnerExp($expGagnee) {
+    public function gagnerExp($expGagnee)
+    {
         $this->currentExp += $expGagnee;
     }
 
-    public function gagnerOr($orGagne) {
+    public function gagnerOr($orGagne)
+    {
         $this->or += $orGagne;
     }
 
-    public function gagnerObjet($objet) {
+    public function gagnerObjet($objet)
+    {
         $this->ajouterObjetInventaire($objet);
     }
 }
@@ -279,37 +277,45 @@ class Objet
     }
 
     // getter
-    public function getNomObjet() {
+    public function getNomObjet()
+    {
         return $this->nomObjet;
     }
 
-    public function getTypeObjet() {
+    public function getTypeObjet()
+    {
         return $this->typeObjet;
     }
 
-    public function getBonus() {
+    public function getBonus()
+    {
         return $this->bonus;
     }
 
-    public function getMalus() {
+    public function getMalus()
+    {
         return $this->malus;
     }
 
     // setter
 
-    public function setNomObjet($nomObjet) {
+    public function setNomObjet($nomObjet)
+    {
         $this->nomObjet = $nomObjet;
     }
 
-    public function setTypeObjet($typeObjet) {
+    public function setTypeObjet($typeObjet)
+    {
         $this->typeObjet = $typeObjet;
     }
 
-    public function setBonus($bonus) {
+    public function setBonus($bonus)
+    {
         $this->bonus = $bonus;
     }
 
-    public function setMalus($malus) {
+    public function setMalus($malus)
+    {
         $this->malus = $malus;
     }
 
