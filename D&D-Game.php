@@ -126,7 +126,7 @@ class DD_Game
                 $this->talkMarchand($this->currentSalle);
                 break;
             case 'Enigme':
-                $this->repondreEnigme($this->currentSalle->getEnigme());
+                $this->currentSalle->repondreEnigme($this->currentSalle->getEnigme());
                 break;
             case 'Boss':
                 $this->joueur->attaquer($this->currentSalle->getBoss());
