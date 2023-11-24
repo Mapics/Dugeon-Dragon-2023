@@ -52,6 +52,8 @@ class DD_DAO
 
                     $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', new Monstre($monstre['Nom'], $monstre['PV'], $monstre['PA'], $monstre['PD'], $randLvl, $monstre['Exp_donne'], $monstre['Gold_donne']));
 
+                    // $salleCombat->afficherInformations();
+
                     return $salleCombat;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la récupération du monstre: " . $e->getMessage();
