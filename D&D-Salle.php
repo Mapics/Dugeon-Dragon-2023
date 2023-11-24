@@ -110,7 +110,7 @@ class SalleEnigme extends Salle
 
 class SalleMarchand extends Salle
 {
-    protected $marchand;
+    protected $marchand = [];
 
     public function __construct($type, $description, $marchand)
     {

@@ -39,7 +39,7 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = 20;
+        $rand = rand(50, 74);
         switch (true) {
             case $rand < 50:
                 try {
@@ -66,16 +66,30 @@ class DD_DAO
                     $newMarchand = $this->bdd->prepare("SELECT * FROM Marchand ORDER BY RAND() LIMIT 2");
                     $newMarchand->execute();
 
-                    $marchands = $newMarchand->fetch(PDO::FETCH_ASSOC);
+                    $marchands = $newMarchand->fetchAll(PDO::FETCH_ASSOC);
 
-                    echo $marchands['Id_arme'];
+                    foreach ($marchands as $key => $marchand) {
+                        $ArmeId = $marchand['Id_arme'];
+                        $newArme = $this->bdd->prepare("SELECT * FROM armes WHERE Id_arme = $ArmeId");
+                        $newArme->execute();
 
+                        
 
-                    // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [ $marchand['Objet'] , $marchand['Objet2'] ]);
+                        $NouvelleArme = $newArme->fetch(PDO::FETCH_ASSOC);
+                        echo $NouvelleArme['Nom_arme'];
+                        
+                        $NouvelleArme = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "", $NouvelleArme['Niv_requis']);
+                    }
+                    // return $Armes;
 
-                    // $salleMarchand->afficherInformations();
+                    // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [$marchand[0]['Id_arme'], $marchand[1]['Id_arme']]);
 
-                    return true;
+                    // return $salleMarchand;
+
+                    
+                    $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [$NouvelleArme, $NouvelleArme]);
+
+                    $salleMarchand->afficherInformations();
                 } catch (PDOException $e) {
                     echo "Erreur lors de la récupération du marchand: " . $e->getMessage();
                     return false;

@@ -341,12 +341,15 @@ class Arme extends Objet
     protected $typeArme;
     protected $effet;
     protected $degats;
-    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet)
+
+    protected $nivRequis;
+    function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet, $nivRequis)
     {
         parent::__construct($nomObjet, $typeObjet, $bonus, $malus);
         $this->typeArme = $typeArme;
         $this->effet = $effet;
         $this->degats = $degats;
+        $this->nivRequis = $nivRequis;
     }
 
     //getter
@@ -365,6 +368,11 @@ class Arme extends Objet
         return $this->effet;
     }
 
+    public function getNivRequis()
+    {
+        return $this->nivRequis;
+    }
+
     //setter
     public function setDegats($degats)
     {
@@ -381,9 +389,14 @@ class Arme extends Objet
         $this->effet = $effet;
     }
 
+    public function setNivRequis($nivRequis)
+    {
+        $this->nivRequis = $nivRequis;
+    }
+
     public function afficherArme()
     {
-        echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . "\n";
+        echo "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Niveau Requis : " . $this->nivRequis . "\n";
     }
 
     public function utiliserObjet(Personnage $cible)
