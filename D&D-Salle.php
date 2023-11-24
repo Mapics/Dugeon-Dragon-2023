@@ -51,7 +51,7 @@ class SalleCombat extends Salle
     // piege debuff 
     public function getMonstre()
     {
-        return $this->monstre;
+        return $this->monstre->getNom();
     }
 
     public function afficherInformations()

@@ -52,14 +52,14 @@ class DD_DAO
 
                     $randLvl = rand(1, 5);
 
-                    $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('" . $monstre['Nom'] . "', " . $randLvl . ")");
+                    $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', new Monstre($monstre['Nom'], $monstre['PV'], $monstre['PA'], $monstre['PD'], $randLvl, $monstre['Exp_donne'], $monstre['Gold_donne']));
                     
                     $salleCombat->afficherInformations();
 
-                    return true;
+                    return $salleCombat;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la récupération du monstre: " . $e->getMessage();
-                    return false;
+                    return NULL;
                 }
                 // $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
                 // $salleCombat->afficherInformations();

@@ -11,13 +11,14 @@ class DD_Game
     }
 
     // getter
-    public function getDdDAO()
-    {
+    public function getDdDAO() {
         return $this->ddDAO;
     }  
-    public function getJoueur()
-    {
+    public function getJoueur() {
         return $this->joueur;
+    }
+    public function getCurrentSalle() {
+        return $this->currentSalle;
     }
 
     // setter 
@@ -85,7 +86,7 @@ class DD_Game
 
     public function seDeplacer() {
         $this->currentSalle = $this->ddDAO->salleAleatoire();
-        $this->SalleInteraction($this->currentSalle);
+        $this->SalleInteraction($this->getCurrentSalle());
     }
 
     public function afficherMenu() {
@@ -96,14 +97,14 @@ class DD_Game
         echo "5. Quitter\n";
     }
 
-    public function SalleInteraction($salle) {
+    public function SalleInteraction(Salle $salle) {
         $salle->afficherInformations();
         $type = $salle->getType();
         switch ($type) {
             case 'Vide':
                 
                 break;
-                case 'Combat' :
+            case 'Combat' :
                 $this->joueur->attaquer($salle->getMonstre());
                 if ($salle->getMonstre()->isDead()) {
                     // TODO
