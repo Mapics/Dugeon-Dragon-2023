@@ -187,6 +187,9 @@ class DD_Game
     // FONCTION MARCHAND
     public function talkMarchand(SalleMarchand $marchand)
     {
+        echo "Bonjour, que voulez-vous acheter ?\n";
+        echo "1. Arme 1\n";
+        echo "2. Arme 2\n";
         $choix = readline();
         switch ($choix) {
             case 1:

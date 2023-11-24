@@ -207,7 +207,8 @@ class DD_DAO
                 // 5% SALLE VIDE RIEN DE SPECIAL LA PROGRESSION CONTINUE
             case $rand >= 95 && $rand <= 100:
                 echo "Vous êtes tombé sur une salle vide !";
-                return null;
+                $salleVide = new SalleVide('Vide', 'Une salle vide');
+                return $salleVide;
 
                 // SI ERREUR
             default:
