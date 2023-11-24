@@ -19,11 +19,6 @@ class DD_DAO
             return false;
         }
     }
-
-<<<<<<< Updated upstream
-    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
-    {
-=======
     public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur) {
         try {
             $requete = $this->bdd->prepare("INSERT INTO inventaire (Id_arme, Id_perso) VALUES (?, ?)");
