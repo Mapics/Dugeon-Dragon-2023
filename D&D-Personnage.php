@@ -133,12 +133,6 @@ class Personnage
         echo "Dégâts: " . $this->getPA() . "\n";
         echo "Défense: " . $this->getPD() . "\n";
     }
-
-    public function afficherInventaire()
-    {
-        echo "Inventaire: \n";
-        // echo "Arme: " . $this->getArme() . "\n";
-    }
 }
 
 class Joueur extends Personnage
@@ -161,6 +155,44 @@ class Joueur extends Personnage
     public function setInventaire($inventaire)
     {
         $this->inventaire = $inventaire;
+    }
+
+    public function ajouterObjetInventaire($objet)
+    {
+        $this->inventaire[] = $objet;
+    }
+
+    public function supprimerObjetInventaire($objet)
+    {
+        $index = array_search($objet, $this->inventaire);
+
+        if ($index !== false) {
+            unset($this->inventaire[$index]);
+            $this->inventaire = array_values($this->inventaire);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function afficherInventaire()
+    {
+        echo "Inventaire :\n";
+        foreach ($this->inventaire as $objet) {
+            echo "- " . $objet . "\n";
+        }
+    }
+
+    public function utiliserObjetInventaire($nomObjet)
+    {
+        if (in_array($nomObjet, $this->inventaire)) {
+            echo "Vous utilisez l'objet : " . $nomObjet . ".\n";
+
+            $index = array_search($nomObjet, $this->inventaire);
+            unset($this->inventaire[$index]);
+        } else {
+            echo "L'objet " . $nomObjet . " n'est pas dans votre inventaire.\n";
+        }
     }
 }
 
@@ -289,7 +321,8 @@ class Arme extends Objet
     }
 
     //getter
-    public function getDegats() {
+    public function getDegats()
+    {
         return $this->degats;
     }
 
@@ -304,7 +337,8 @@ class Arme extends Objet
     }
 
     //setter
-    public function setDegats($degats) {
+    public function setDegats($degats)
+    {
         $this->degats = $degats;
     }
 
@@ -351,13 +385,5 @@ class Inventaire
     public function setArme($arme)
     {
         $this->arme = $arme;
-    }
-
-    public function afficherInventaire()
-    {
-        echo "Voici les objets dans votre inventaire :";
-        foreach ($this->arme as $key => $value) {
-            echo $key . " : " . $value . "\n";
-        }
     }
 }
