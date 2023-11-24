@@ -51,16 +51,13 @@ class DD_DAO
                     $randLvl = rand(1, 5);
 
                     $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', new Monstre($monstre['Nom'], $monstre['PV'], $monstre['PA'], $monstre['PD'], $randLvl, $monstre['Exp_donne'], $monstre['Gold_donne']));
-                    
-                    // $salleCombat->afficherInformations();
 
                     return $salleCombat;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la récupération du monstre: " . $e->getMessage();
                     return NULL;
                 }
-                // $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
-                // $salleCombat->afficherInformations();
+
             case $rand >= 50 && $rand < 75:
                 try {
                     $newMarchand = $this->bdd->prepare("SELECT * FROM Marchand ORDER BY RAND() LIMIT 2");
@@ -76,26 +73,18 @@ class DD_DAO
                         
 
                         $NouvelleArme = $newArme->fetch(PDO::FETCH_ASSOC);
-                        echo $NouvelleArme['Nom_arme'];
                         
-                        $NouvelleArme = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "", $NouvelleArme['Niv_requis']);
+                        $MarchandArmes[$key] = new Arme($NouvelleArme['Nom_arme'], "Arme" , $NouvelleArme['Bonus'], $NouvelleArme['Malus'], $NouvelleArme['Type'], $NouvelleArme['Degat'], "", $NouvelleArme['Niv_requis']);
                     }
-                    // return $Armes;
-
-                    // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [$marchand[0]['Id_arme'], $marchand[1]['Id_arme']]);
-
-                    // return $salleMarchand;
-
                     
-                    $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [$NouvelleArme, $NouvelleArme]);
+                    $salleMarchand = new SalleMarchand('Marchand', 'Un marchand vous propose des objets', $MarchandArmes[0], $MarchandArmes[1]);
 
-                    $salleMarchand->afficherInformations();
+                    return $salleMarchand;
                 } catch (PDOException $e) {
                     echo "Erreur lors de la récupération du marchand: " . $e->getMessage();
                     return false;
                 }
-                // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
-                // return $salleMarchand;
+
             case $rand >= 75 && $rand < 90:
                 echo "salle énigme";
                 $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');

@@ -406,6 +406,11 @@ class Arme extends Objet
             $cible->setPD($cible->getPD() + $this->malus);
         }
     }
+
+    public function __toString()
+    {
+        return "Nom de l'arme : " . $this->nomObjet . ", Type d'arme : " . $this->typeArme . ", Bonus : " . $this->bonus . ", Malus : " . $this->malus . ", Dégats : " . $this->degats . ", Effet : " . $this->effet . ", Niveau Requis : " . $this->nivRequis;
+    }
 }
 
 class Inventaire

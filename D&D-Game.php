@@ -143,7 +143,7 @@ class DD_Game
 
     public function Combattre(Personnage $monstre)
     {
-        while (!$this->currentSalle->getMonstre()->isDead() && $this->joueur->isDead()) {
+        while (!$this->currentSalle->getMonstre()->isDead() && !$this->joueur->isDead()) {
             $this->joueur->afficherStats();
             $monstre->afficherStats();
             $this->afficheAttaque();

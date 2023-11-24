@@ -110,23 +110,44 @@ class SalleEnigme extends Salle
 
 class SalleMarchand extends Salle
 {
-    protected $marchand = [];
+    protected $arme1;
 
-    public function __construct($type, $description, $marchand)
+    protected $arme2;
+
+    public function __construct($type, $description, $arme1, $arme2)
     {
         parent::__construct($type, $description);
-        $this->marchand = $marchand;
+        $this->arme1 = $arme1;
+        $this->arme2 = $arme2;
     }
 
-    public function getMarchand()
+    public function getArme1()
     {
-        return $this->marchand;
+        return $this->arme1;
     }
 
+    public function getArme2()
+    {
+        return $this->arme2;
+    }
+
+    public function setArme1($arme1)
+    {
+        $this->arme1 = $arme1;
+    }
+
+    public function setArme2($arme2)
+    {
+        $this->arme2 = $arme2;
+    }
+
+    
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
-        echo "Marchand: " . $this->getMarchand() . "\n";
+        echo "Arme 1: " . $this->getArme1() . "\n";
+        echo "Arme 2: " . $this->getArme2() . "\n";
     }
+
 }
