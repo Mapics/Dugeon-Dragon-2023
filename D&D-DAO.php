@@ -43,6 +43,27 @@ class DD_DAO
         switch (true) {
             case $rand < 50:
                 echo "salle combat";
+                try {
+                    $newMonstre = $this->bdd->prepare("SELECT * FROM Monstre WHERE Type = 'normal' ORDER BY RAND() LIMIT 1");
+                    $newMonstre->execute();
+
+                    $monstre = $newMonstre->fetch(PDO::FETCH_ASSOC);
+
+                    $randLvl = rand(1, 5);
+
+                    $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('" . $monstre['Nom'] . "', " . $randLvl . ")");
+                    
+                    $salleCombat->afficherInformations();
+
+                    return true;
+                } catch (PDOException $e) {
+                    echo "Erreur lors de la récupération du monstre: " . $e->getMessage();
+                    return false;
+                }
+                // $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', "new Monstre('Pikachu', 1)");
+                // $salleCombat->afficherInformations();
+                
+            case 51 < 75:
                 $salleCombat = new SalleCombat('Combat', 'un très dangereux monstre va apparaître', new Monstre('Pikachu', 1));
                 $salleCombat->afficherInformations();
                 return $salleCombat;

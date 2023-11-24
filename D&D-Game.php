@@ -45,7 +45,7 @@ class DD_Game
             case 1:
                 echo "Chissisez votre pseudo :\n";
                 $name = readline();
-                $this->personnage = new Joueur($name, array());
+                $this->joueur = new Joueur($name, array());
                 $this->Jouer();
                 break;
             case 2:
