@@ -19,20 +19,23 @@ class DD_DAO
         }
     }
 
-    public function verifJoueurExistant($player_name) {
+    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
             $result = $requete->fetchAll(PDO::FETCH_ASSOC);
-            $joueur = new Joueur($result[0]['nom'], $result[0]['PV'], $result[0]['PA'], $result[0]['PD'], $result[0]['EXP'], $result[0]['Niveau']);
+            $player = new Joueur($result['nom'], array());
+            $player->setPlayerSave($PV, $PA, $PD, $EXP, $Niveau);
+
+
             if(count($result) > 0) {
-                return true;
+                return $player;
             } else {
-                return false;
+                return NULL;
             }
         } catch (PDOException $e) {
             echo "Erreur de recherche de personnage: " . $e->getMessage();
-            return false;
+            return NULL;
             
         }
     }
@@ -158,6 +161,28 @@ class DD_DAO
             default:
                 echo "erreur dans la sélection de la salle";
                 break;
+        }
+    }
+
+    public function Sauvegarder() {
+        try {
+            $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
+            $requete->execute();
+            $result = $requete->fetchAll(PDO::FETCH_ASSOC);
+            
+            $IdPerso = $result['Id_perso'];
+
+            $requete2 = $this->bdd->prepare("SELECT * FROM inventaire WHERE Id_perso = ?");
+            $requete2->execute([$IdPerso]);
+            $result2 = $requete2->fetchAll(PDO::FETCH_ASSOC);
+
+            $IdInventaire = $result2['Id_inventaire'];
+
+            $requete3 = $this->bdd->prepare("INSERT INTO sauvegarde (Id_perso, Id_inventaire) VALUES (?, ?)");
+            $requete3->execute([$IdPerso, $IdInventaire]);
+        } catch (PDOException $e) {
+            echo "Erreur lors de la sauvegarde : " . $e->getMessage();
+            return NULL;
         }
     }
 }
