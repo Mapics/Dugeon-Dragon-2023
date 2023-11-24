@@ -167,14 +167,18 @@ class Joueur extends Personnage
 class Monstre extends Personnage
 {
     protected $level;
+    protected $dropExp;
+    protected $dromGold;
 
-    function __construct($name, $level)
+    function __construct($name, $PV, $PA, $PD, $level, $dropExp, $dropGold)
     {
         parent::__construct($name);
-        $this->PV = 100 * $level;
-        $this->PA = 10 * $level;
-        $this->PD = 10 * $level;
+        $this->PV = $PV * $level;
+        $this->PA = $PA * $level;
+        $this->PD = $PD * $level;
         $this->level = $level;
+        $this->dromExp = $dropExp;
+        $this->dromGold = $dropGold;
     }
 
     // getter
@@ -271,11 +275,8 @@ class Arme extends Objet
 {
 
     protected $typeArme;
-
     protected $effet;
-
     protected $degats;
-
     function __construct($nomObjet, $typeObjet, $bonus, $malus, $typeArme, $degats, $effet)
     {
         parent::__construct($nomObjet, $typeObjet, $bonus, $malus);

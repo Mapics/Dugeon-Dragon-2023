@@ -65,22 +65,18 @@ class DD_DAO
                 
             case 51 < 75:
                 $salleCombat = new SalleCombat('Combat', 'un très dangereux monstre va apparaître', new Monstre('Pikachu', 1));
-                $salleCombat->afficherInformations();
                 return $salleCombat;
             case $rand >= 50 && $rand < 75:
                 echo "salle marchand";
                 $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
-                $salleMarchand->afficherInformations();
                 return $salleMarchand;
             case $rand >= 75 && $rand < 90:
                 echo "salle énigme";
                 $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
-                $salleEnigme->afficherInformations();
                 return $salleEnigme;
             case $rand >= 90 && $rand < 95:
                 echo "salle boss";
                 $salleBoss = new SalleBoss('Boss', 'un boss vous attend', new Monstre('Boss', 10));
-                $salleBoss->afficherInformations();
                 return $salleBoss;
             case $rand >= 95 && $rand <= 100:
                 echo "salle vide";

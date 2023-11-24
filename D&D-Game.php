@@ -86,6 +86,7 @@ class DD_Game
 
     public function seDeplacer() {
         $this->currentSalle = $this->ddDAO->salleAleatoire();
+        $this->SalleInteraction($this->currentSalle);
     }
 
     public function afficherMenu() {
@@ -96,6 +97,45 @@ class DD_Game
         echo "5. Quitter\n";
     }
 
+    public function SalleInteraction($salle) {
+        $salle->afficherInformations();
+        $type = $salle->getType();
+        switch ($type) {
+            case 'Vide':
+                
+                break;
+                case 'Combat' :
+                $this->joueur->attaquer($salle->getMonstre());
+                if ($salle->getMonstre()->isDead()) {
+                    // TODO
+                    // $this->joueur->gagnerExp($salle->getMonstre()->getExp());
+                    // $this->joueur->gagnerOr($salle->getMonstre()->getOr());
+                    // $this->joueur->gagnerObjet($salle->getMonstre()->getObjet());
+                    // $this->joueur->LevelUp();
+                    $this->joueur->afficherStats();
+                }
+                break;
+            case 'Marchand' :
+                $this->joueur->acheter($salle->getMarchand());
+                break;
+            case 'Enigme' :
+                $this->joueur->repondreEnigme($salle->getEnigme());
+                break;
+            case 'Boss' :
+                $this->joueur->attaquer($salle->getBoss());
+                if ($salle->getBoss()->isDead()) {
+                    // TODO
+                    // $this->joueur->gagnerExp($salle->getBoss()->getExp());
+                    // $this->joueur->gagnerOr($salle->getBoss()->getOr());
+                    // $this->joueur->gagnerObjet($salle->getBoss()->getObjet());
+                    // $this->joueur->LevelUp();
+                    $this->joueur->afficherStats();
+                }
+                break;
+        }
+    }
+
+    
     public function afficheAttaque() {
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
