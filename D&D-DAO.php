@@ -203,8 +203,19 @@ class DD_DAO
 
     public function Sauvegarder(Personnage $joueur) {
         try {
-            $requete = $this->bdd->prepare("UPDATE personnages SET PV = ?, PA = ?, PD = ?, EXP = ?, Niveau = ? WHERE nom = ?");
-            $requete->execute([$joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel(), $joueur->getName()]);
+            try {
+                $requete2 = $this->bdd->prepare("SELECT id_inventaire FROM inventaire WHERE Id_perso = ?");
+                $requete2->execute([$joueur->getId()]);
+                $result = $requete2->fetch(PDO::FETCH_ASSOC);
+                $id_inventaire = $result['id_inventaire'];
+            } catch (PDOException $e) {
+                echo "Erreur de recherche d'inventaire: " . $e->getMessage();
+                return false;
+            }
+            
+            $requete = $this->bdd->prepare("UPDATE personnages SET PV = ?, PA = ?, PD = ?, EXP = ?, Niveau = ?, id_inventaire = ? WHERE nom = ?");
+            $requete->execute([$joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel(), $id_inventaire, $joueur->getName()]);
+            
             return true;
         } catch (PDOException $e) {
             echo "Erreur de sauvegarde de personnage: " . $e->getMessage();
