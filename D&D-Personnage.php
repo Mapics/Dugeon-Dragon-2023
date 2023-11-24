@@ -74,11 +74,6 @@ class Personnage
         $this->level = $level;
     }
 
-    public function Equip()
-    {
-        //TODO
-    }
-
     public function setSave()
     {
         //TODO
@@ -194,6 +189,27 @@ class Joueur extends Personnage
             echo "L'objet " . $nomObjet . " n'est pas dans votre inventaire.\n";
         }
     }
+
+    public function equiperArme($arme)
+    {
+        if (in_array($arme, $this->inventaire)) {
+            $detailsArme = $this->detailsArme($arme);
+            $this->degats += $detailsArme['attaque'];
+            echo "Vous avez équipé l'arme : " . $arme . ".\n";
+        } else {
+            "Vous ne possédez pas l'arme : " . $arme . ".\n";
+        }
+    }
+
+    private function detailsArme($nomArme)
+    {
+        $armes = [
+            // "épée1" => ["attaque" => 10],
+            // "épée2" => ["attaque" => 15],
+        ];
+
+        return $armes[$nomArme];
+    }
 }
 
 class Monstre extends Personnage
@@ -214,12 +230,9 @@ class Monstre extends Personnage
     }
 
     // getter
-    public function getLevel() {
+    public function getLevel()
+    {
         return $this->level;
-    }
-
-    public function getNom() {
-        return $this->name;
     }
 
     // setter

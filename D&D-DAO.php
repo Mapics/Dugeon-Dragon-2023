@@ -39,8 +39,7 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        // TODO remettre aleatoire
-        $rand = 20;
+        $rand = rand(1, 100);
         switch (true) {
             case $rand < 50:
                 echo "salle combat";
@@ -53,8 +52,8 @@ class DD_DAO
                     $randLvl = rand(1, 5);
 
                     $salleCombat = new SalleCombat('Combat', 'un tres dangereux monstre va apparaitre', new Monstre($monstre['Nom'], $monstre['PV'], $monstre['PA'], $monstre['PD'], $randLvl, $monstre['Exp_donne'], $monstre['Gold_donne']));
-
-                    $salleCombat->afficherInformations();
+                    
+                    // $salleCombat->afficherInformations();
 
                     return $salleCombat;
                 } catch (PDOException $e) {
@@ -65,8 +64,27 @@ class DD_DAO
                 // $salleCombat->afficherInformations();
             case $rand >= 50 && $rand < 75:
                 echo "salle marchand";
-                $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
-                return $salleMarchand;
+
+                try {
+                    $newMarchand = $this->bdd->prepare("SELECT * FROM Marchand ORDER BY RAND() LIMIT 2");
+                    $newMarchand->execute();
+
+                    $marchands = $newMarchand->fetch(PDO::FETCH_ASSOC);
+
+                    echo $marchands['Id_arme'];
+
+
+                    // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', [ $marchand['Objet'] , $marchand['Objet2'] ]);
+
+                    // $salleMarchand->afficherInformations();
+
+                    return true;
+                } catch (PDOException $e) {
+                    echo "Erreur lors de la récupération du marchand: " . $e->getMessage();
+                    return false;
+                }
+                // $salleMarchand = new SalleMarchand('Marchand', 'un marchand vous propose des objets', ['Objet', 'Un autre']);
+                // return $salleMarchand;
             case $rand >= 75 && $rand < 90:
                 echo "salle énigme";
                 $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
