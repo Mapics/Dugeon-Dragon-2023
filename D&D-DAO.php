@@ -33,7 +33,6 @@ class DD_DAO
     }
 
     public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
->>>>>>> Stashed changes
         try {
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
