@@ -149,11 +149,11 @@ class DD_Game
             $this->afficheAttaque();
             $choix = readline();
             switch ($choix) {
-                case 1:
+                case 1 :
                     $this->joueur->attaquer($monstre);
                     $monstre->attaquer($this->joueur);
                     break;
-                case 2:
+                case 2 :
                     $this->joueur->afficherInventaire();
                     break;
             }
