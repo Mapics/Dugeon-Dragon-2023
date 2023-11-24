@@ -87,8 +87,22 @@ class DD_DAO
 
             case $rand >= 75 && $rand < 90:
                 echo "salle énigme";
-                $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
-                return $salleEnigme;
+
+                try {
+                    $newEnigme = $this->bdd->prepare("SELECT * FROM Enigme ORDER BY RAND() LIMIT 1");
+                    $newEnigme->execute();
+
+                    $enigme = $newEnigme->fetch(PDO::FETCH_ASSOC);
+
+                    $salleEnigme = new SalleEnigme('Énigme', 'Une énigme vous attend', $enigme['Enigme'], $enigme['Rep1'], $enigme['Rep2'], $enigme['Rep3'], $enigme['Bonne_rep']);
+
+                    return $salleEnigme;
+                } catch (PDOException $e) {
+                    echo "Erreur lors de la récupération de l'énigme: " . $e->getMessage();
+                    return false;
+                }
+                // $salleEnigme = new SalleEnigme('Énigme', 'une énigme vous attend', 'Quelle est la couleur du cheval blanc de Henri IV ?');
+                // return $salleEnigme;
             case $rand >= 90 && $rand < 95:
                 echo "salle boss";
                 $salleBoss = new SalleBoss('Boss', 'un boss vous attend', new Monstre('Boss', 10));

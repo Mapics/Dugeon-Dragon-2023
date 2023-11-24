@@ -89,10 +89,22 @@ class SalleEnigme extends Salle
 {
     protected $enigme;
 
-    public function __construct($type, $description, $enigme)
+    protected $rep1;
+
+    protected $rep2;
+
+    protected $rep3;
+
+    protected $bonne_rep;
+
+    public function __construct($type, $description, $enigme, $rep1, $rep2, $rep3, $bonne_rep)
     {
         parent::__construct($type, $description);
         $this->enigme = $enigme;
+        $this->rep1 = $rep1;
+        $this->rep2 = $rep2;
+        $this->rep3 = $rep3;
+        $this->bonne_rep = $bonne_rep;
     }
 
     public function getEnigme()
@@ -100,11 +112,63 @@ class SalleEnigme extends Salle
         return $this->enigme;
     }
 
+    public function getRep1()
+    {
+        return $this->rep1;
+    }
+
+    public function getRep2()
+    {
+        return $this->rep2;
+    }
+
+    public function getRep3()
+    {
+        return $this->rep3;
+    }
+
+    public function getBonneRep()
+    {
+        return $this->bonne_rep;
+    }
+
+    public function setEnigme($enigme)
+    {
+        $this->enigme = $enigme;
+    }
+
+    public function setRep1($rep1)
+    {
+        $this->rep1 = $rep1;
+    }
+
+    public function setRep2($rep2)
+    {
+        $this->rep2 = $rep2;
+    }
+
+    public function setRep3($rep3)
+    {
+        $this->rep3 = $rep3;
+    }
+
+    public function setBonneRep($bonne_rep)
+    {
+        $this->bonne_rep = $bonne_rep;
+    }
+
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
         echo "Enigme: " . $this->getEnigme() . "\n";
+        $reponses = [$this->getRep1(), $this->getRep2(), $this->getRep3(), $this->getBonneRep()];
+
+        shuffle($reponses);
+
+        foreach ($reponses as $key => $reponse) {
+            echo $key + 1 . " - " . $reponse . "\n";
+        }
     }
 }
 
