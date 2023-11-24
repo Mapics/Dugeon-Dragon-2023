@@ -243,7 +243,6 @@ class SalleEnigme extends Salle
 class SalleMarchand extends Salle
 {
     protected $arme1;
-
     protected $arme2;
 
     public function __construct($type, $description, $arme1, $arme2)

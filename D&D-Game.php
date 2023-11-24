@@ -123,7 +123,7 @@ class DD_Game
                 }
                 break;
             case 'Marchand':
-                $this->talkMarchand($this->currentSalle->getMarchand());
+                $this->talkMarchand($this->currentSalle);
                 break;
             case 'Enigme':
                 $this->repondreEnigme($this->currentSalle->getEnigme());
@@ -160,13 +160,13 @@ class DD_Game
         }
     }
 
-    public function talkMarchand(Salle $marchand) {
+    public function talkMarchand(SalleMarchand $marchand) {
         $choix = readline();
         switch ($choix) {
-            case 1:
+            case 1 :
                 $this->joueur->acheter($marchand->getArme1());
                 break;
-            case 2:
+            case 2 :
                 $this->joueur->acheter($marchand->getArme2());
                 break;
         }
