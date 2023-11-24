@@ -22,33 +22,46 @@ class DD_DAO
             return false;
         }
     }
-    public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur) {
+
+    // AJOUTE L'INVENTAIRE LIE AU JOUEUR A LA BASE DE DONNEE
+    public function ajouterInventaireBDD(Inventaire $inventaire, Personnage $joueur)
+    {
         try {
+            // INSERE UNE NOUVELLE LIGNE DANS LA TABLE INVENTAIRE EN FONCTION DE L'IDENTIFIANT DU JOUEUR ET SON ARME
             $requete = $this->bdd->prepare("INSERT INTO inventaire (Id_arme, Id_perso) VALUES (?, ?)");
             $requete->execute([$inventaire->getArme()->getId(), $joueur->getId()]);
-        
             return true;
         } catch (PDOException $e) {
+            // SI ERREUR
             echo "Erreur d'ajout d'inventaire: " . $e->getMessage();
             return false;
         }
-
     }
 
-    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau) {
+    // VERIFIE SI LE JOUEUR DESIRE SE TROUVE DANS LA BASE DE DONNEES
+    public function verifJoueurExistant($player_name, $PV, $PA, $PD, $EXP, $Niveau)
+    {
         try {
+            // REQUETE POUR RECHERCHER LE JOUEUR PAR SON NOM CHOISI A LA CREATION
             $requete = $this->bdd->prepare("SELECT * FROM personnages WHERE nom = ?");
             $requete->execute([$player_name]);
             $result = $requete->fetchAll(PDO::FETCH_ASSOC);
+
+            // CREE UN OBJET JOUEUR EN FONCTION DU NOM RECUPERE DANS LA BASE DE DONNEE AVEC SON INVENTAIRE VIDE
             $player = new Joueur($result['nom'], array());
+
+            // PREPARE LA SAUVEGARDE DU JOUEUR
             $player->setPlayerSave($PV, $PA, $PD, $EXP, $Niveau);
 
-
+            // SI LE JOUEUR EXISTE
             if (count($result) > 0) {
+                // RETOURNE LE JOUEUR
                 return $player;
+                // SI LE JOUEUR N'EXISTE PAS
             } else {
                 return NULL;
             }
+            // SI ERREUR
         } catch (PDOException $e) {
             echo "Erreur de recherche de personnage: " . $e->getMessage();
             return NULL;
@@ -224,10 +237,10 @@ class DD_DAO
                 echo "Erreur de recherche d'inventaire: " . $e->getMessage();
                 return false;
             }
-            
+
             $requete = $this->bdd->prepare("UPDATE personnages SET PV = ?, PA = ?, PD = ?, EXP = ?, Niveau = ?, id_inventaire = ? WHERE nom = ?");
             $requete->execute([$joueur->getPV(), $joueur->getPA(), $joueur->getPD(), $joueur->getCurrentEXP(), $joueur->getLevel(), $id_inventaire, $joueur->getName()]);
-            
+
             return true;
         } catch (PDOException $e) {
             echo "Erreur de sauvegarde de personnage: " . $e->getMessage();
