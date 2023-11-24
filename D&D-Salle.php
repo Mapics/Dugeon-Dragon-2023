@@ -1,22 +1,24 @@
 <?php
 
+//CREATION DES SALLES EN ABSTRAIT
 abstract class Salle
 {
-    protected $type;
-    protected $description;
+    protected $type;        //TYPE DE SALLE
+    protected $description; //DESCRIPTION DE LA SALLE
 
-    public function __construct($type, $description)
+    public function __construct($type, $description)        //CONSTRUCTEUR
     {
         $this->type = $type;
         $this->description = $description;
     }
 
-    public function getType()
+    //GETTERS
+    public function getType()       
     {
         return $this->type;
     }
 
-    public function getDescription()
+    public function getDescription()        
     {
         return $this->description;
     }
@@ -24,36 +26,37 @@ abstract class Salle
     abstract public function afficherInformations();
 }
 
-class SalleVide extends Salle
+class SalleVide extends Salle       //SALLE VIDE
 {
-    public function __construct($type, $description)
+    public function __construct($type, $description)        //CONSTRUCTEUR
     {
         parent::__construct($type, $description);
     }
 
-    public function afficherInformations()
+    public function afficherInformations()      //AFFICHE LES INFORMATIONS DE LA SALLE
     {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
     }
 }
 
-class SalleCombat extends Salle
+class SalleCombat extends Salle             //SALLE DE COMBAT
 {
-    protected Personnage $monstre;
+    protected Personnage $monstre;      //MONSTRE DE LA SALLE
 
-    public function __construct($type, $description, $monstre)
+    public function __construct($type, $description, $monstre)      //CONSTRUCTEUR
     {
         parent::__construct($type, $description);
         $this->monstre = $monstre;
     }
 
-    // piege debuff 
+    //GETTERS
     public function getMonstre()
     {
         return $this->monstre;
     }
 
+    //AFFICHE LES INFORMATIONS DE LA SALLE
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
@@ -62,22 +65,23 @@ class SalleCombat extends Salle
     }
 }
 
-class SalleBoss extends Salle
+class SalleBoss extends Salle   //SALLE DE BOSS
 {
-    protected $boss;
+    protected $boss;        //BOSS DE LA SALLE
 
-    public function __construct($type, $description, $boss)
+    public function __construct($type, $description, $boss)     //CONSTRUCTEUR
     {
         parent::__construct($type, $description);
         $this->boss = $boss;
     }
 
+    //GETTERS
     public function getBoss()
     {
         return $this->boss;
     }
 
-    public function afficherInformations()
+    public function afficherInformations()  //AFFICHE LES INFORMATIONS DE LA SALLE
     {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
@@ -85,20 +89,20 @@ class SalleBoss extends Salle
     }
 }
 
-class SalleEnigme extends Salle
+class SalleEnigme extends Salle     //SALLE D'ENIGME
 {
-    protected $enigme;
+    protected $enigme;      //ENIGME DE LA SALLE
 
-    protected $rep1;
+    protected $rep1;        //REPONSE 1 DE L'ENIGME
 
-    protected $rep2;
+    protected $rep2;        //REPONSE 2 DE L'ENIGME
 
-    protected $rep3;
+    protected $rep3;        //REPONSE 3 DE L'ENIGME
 
-    protected $bonne_rep;
+    protected $bonne_rep;   //BONNE REPONSE DE L'ENIGME
 
-    public function __construct($type, $description, $enigme, $rep1, $rep2, $rep3, $bonne_rep)
-    {
+        public function __construct($type, $description, $enigme, $rep1, $rep2, $rep3, $bonne_rep)   //CONSTRUCTEUR
+        {
         parent::__construct($type, $description);
         $this->enigme = $enigme;
         $this->rep1 = $rep1;
@@ -107,6 +111,7 @@ class SalleEnigme extends Salle
         $this->bonne_rep = $bonne_rep;
     }
 
+    //GETTERS
     public function getEnigme()
     {
         return $this->enigme;
@@ -132,6 +137,7 @@ class SalleEnigme extends Salle
         return $this->bonne_rep;
     }
 
+    //SETTERS
     public function setEnigme($enigme)
     {
         $this->enigme = $enigme;
@@ -157,6 +163,7 @@ class SalleEnigme extends Salle
         $this->bonne_rep = $bonne_rep;
     }
 
+    //AFFICHE LES INFORMATIONS DE LA SALLE
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
@@ -171,6 +178,7 @@ class SalleEnigme extends Salle
         }
     }
 
+    //REND LES REPONSES DE L'ENIGME ALEATOIRES, ET FAIT PERDRE DES PV, DE L'ARGENT OU UNE ARME AU JOUEUR SI IL SE TROMPE
     public function repondreEnigme($enigme, $joueur)
     {
         echo "Énigme: " . $enigme->getEnigme() . "\n";
@@ -240,18 +248,19 @@ class SalleEnigme extends Salle
     }
 }
 
-class SalleMarchand extends Salle
+class SalleMarchand extends Salle       //SALLE DE MARCHAND
 {
-    protected $arme1;
-    protected $arme2;
+    protected $arme1;       //ARME 1 DU MARCHAND
+    protected $arme2;       //ARME 2 DU MARCHAND
 
-    public function __construct($type, $description, $arme1, $arme2)
+    public function __construct($type, $description, $arme1, $arme2)        //CONSTRUCTEUR
     {
         parent::__construct($type, $description);
         $this->arme1 = $arme1;
         $this->arme2 = $arme2;
     }
 
+    //GETTERS
     public function getArme1()
     {
         return $this->arme1;
@@ -261,6 +270,8 @@ class SalleMarchand extends Salle
     {
         return $this->arme2;
     }
+
+    //SETTERS
 
     public function setArme1($arme1)
     {
@@ -272,6 +283,8 @@ class SalleMarchand extends Salle
         $this->arme2 = $arme2;
     }
 
+
+    //AFFICHE LES INFORMATIONS DE LA SALLE
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
