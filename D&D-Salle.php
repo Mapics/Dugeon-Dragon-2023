@@ -114,40 +114,32 @@ class SalleMarchand extends Salle
 
     protected $arme2;
 
-    public function __construct($type, $description, $arme1, $arme2)
-    {
+    public function __construct($type, $description, $arme1, $arme2) {
         parent::__construct($type, $description);
         $this->arme1 = $arme1;
         $this->arme2 = $arme2;
     }
 
-    public function getArme1()
-    {
+    public function getArme1() {
         return $this->arme1;
     }
 
-    public function getArme2()
-    {
+    public function getArme2() {
         return $this->arme2;
     }
 
-    public function setArme1($arme1)
-    {
+    public function setArme1($arme1) {
         $this->arme1 = $arme1;
     }
 
-    public function setArme2($arme2)
-    {
+    public function setArme2($arme2) {
         $this->arme2 = $arme2;
     }
-
     
-    public function afficherInformations()
-    {
+    public function afficherInformations() {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
         echo "Arme 1: " . $this->getArme1() . "\n";
         echo "Arme 2: " . $this->getArme2() . "\n";
     }
-
 }

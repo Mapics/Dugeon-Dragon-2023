@@ -39,7 +39,7 @@ class DD_DAO
 
     public function salleAleatoire()
     {
-        $rand = rand(50, 74);
+        $rand = rand(50, 75);
         switch (true) {
             case $rand < 50:
                 try {

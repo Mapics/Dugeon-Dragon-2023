@@ -123,10 +123,10 @@ class DD_Game
                 }
                 break;
             case 'Marchand':
-                $this->joueur->acheter($this->currentSalle->getMarchand());
+                // $this->joueur->acheter($this->currentSalle->getMarchand());
                 break;
             case 'Enigme':
-                $this->joueur->repondreEnigme($this->currentSalle->getEnigme());
+                $this->repondreEnigme($this->currentSalle->getEnigme());
                 break;
             case 'Boss':
                 $this->joueur->attaquer($this->currentSalle->getBoss());
