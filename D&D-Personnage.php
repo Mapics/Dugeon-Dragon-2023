@@ -138,6 +138,7 @@ class Personnage
 class Joueur extends Personnage
 {
     protected $inventaire;
+    protected $or;
 
     function __construct($name, $inventaire)
     {
@@ -214,6 +215,18 @@ class Joueur extends Personnage
         ];
 
         return $armes[$nomArme];
+    }
+
+    public function gagnerExp($expGagnee) {
+        $this->currentExp += $expGagnee;
+    }
+
+    public function gagnerOr($orGagne) {
+        $this->or += $orGagne;
+    }
+
+    public function gagnerObjet($objet) {
+        $this->ajouterObjetInventaire($objet);
     }
 }
 

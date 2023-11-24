@@ -11,13 +11,16 @@ class DD_Game
     }
 
     // getter
-    public function getDdDAO() {
+    public function getDdDAO()
+    {
         return $this->ddDAO;
-    }  
-    public function getJoueur() {
+    }
+    public function getJoueur()
+    {
         return $this->joueur;
     }
-    public function getCurrentSalle() {
+    public function getCurrentSalle()
+    {
         return $this->currentSalle;
     }
 
@@ -58,7 +61,8 @@ class DD_Game
         }
     }
 
-    public function Jouer() {
+    public function Jouer()
+    {
         $ingame = true;
         while ($ingame) {
             $this->afficherMenu();
@@ -84,12 +88,14 @@ class DD_Game
         }
     }
 
-    public function seDeplacer() {
+    public function seDeplacer()
+    {
         $this->currentSalle = $this->ddDAO->salleAleatoire();
         $this->SalleInteraction();
     }
 
-    public function afficherMenu() {
+    public function afficherMenu()
+    {
         echo "1. Afficher les informations du personnage\n";
         echo "2. Afficher les informations de l'inventaire\n";
         echo "3. Se déplacer\n";
@@ -97,12 +103,13 @@ class DD_Game
         echo "5. Quitter\n";
     }
 
-    public function SalleInteraction() {
+    public function SalleInteraction()
+    {
         $this->currentSalle->afficherInformations();
         $type = $this->currentSalle->getType();
         switch ($type) {
             case 'Vide':
-                
+                echo "La salle dans laquelle vous venez d'entrer est totalement vide...";
                 break;
             case 'Combat' :
                 $this->Combattre($this->currentSalle->getMonstre());
