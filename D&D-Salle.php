@@ -40,7 +40,7 @@ class SalleVide extends Salle
 
 class SalleCombat extends Salle
 {
-    protected $monstre;
+    protected Personnage $monstre;
 
     public function __construct($type, $description, $monstre)
     {
@@ -51,14 +51,14 @@ class SalleCombat extends Salle
     // piege debuff 
     public function getMonstre()
     {
-        return $this->monstre->getNom();
+        return $this->monstre;
     }
 
     public function afficherInformations()
     {
         echo "Type de salle: " . $this->getType() . "\n";
         echo "Description: " . $this->getDescription() . "\n";
-        echo "Monstre: " . $this->getMonstre() . "\n";
+        echo "Monstre: " . $this->getMonstre()->getName() . "\n";
     }
 }
 

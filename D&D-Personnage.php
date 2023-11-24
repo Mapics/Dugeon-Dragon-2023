@@ -248,45 +248,37 @@ class Objet
     }
 
     // getter
-    public function getNomObjet()
-    {
+    public function getNomObjet() {
         return $this->nomObjet;
     }
 
-    public function getTypeObjet()
-    {
+    public function getTypeObjet() {
         return $this->typeObjet;
     }
 
-    public function getBonus()
-    {
+    public function getBonus() {
         return $this->bonus;
     }
 
-    public function getMalus()
-    {
+    public function getMalus() {
         return $this->malus;
     }
 
     // setter
 
-    public function setNomObjet($nomObjet)
-    {
+    public function setNomObjet($nomObjet) {
         $this->nomObjet = $nomObjet;
     }
 
-    public function setTypeObjet($typeObjet)
-    {
+    public function setTypeObjet($typeObjet) {
         $this->typeObjet = $typeObjet;
     }
 
-    public function setBonus($bonus)
-    {
+    public function setBonus($bonus) {
         $this->bonus = $bonus;
     }
 
-    public function setMalus($malus)
-    {
+    public function setMalus($malus) {
         $this->malus = $malus;
     }
 

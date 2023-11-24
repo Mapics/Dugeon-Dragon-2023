@@ -86,7 +86,7 @@ class DD_Game
 
     public function seDeplacer() {
         $this->currentSalle = $this->ddDAO->salleAleatoire();
-        $this->SalleInteraction($this->getCurrentSalle());
+        $this->SalleInteraction();
     }
 
     public function afficherMenu() {
@@ -97,16 +97,17 @@ class DD_Game
         echo "5. Quitter\n";
     }
 
-    public function SalleInteraction(Salle $salle) {
-        $salle->afficherInformations();
-        $type = $salle->getType();
+    public function SalleInteraction() {
+        $this->currentSalle->afficherInformations();
+        $type = $this->currentSalle->getType();
         switch ($type) {
             case 'Vide':
                 
                 break;
             case 'Combat' :
-                $this->joueur->attaquer($salle->getMonstre());
-                if ($salle->getMonstre()->isDead()) {
+                $this->Combattre($this->joueur, $this->currentSalle->getMonstre());
+                if ($this->currentSalle->getMonstre()->isDead()) {
+                    echo "est mort \n";
                     // TODO
                     // $this->joueur->gagnerExp($salle->getMonstre()->getExp());
                     // $this->joueur->gagnerOr($salle->getMonstre()->getOr());
@@ -135,7 +136,26 @@ class DD_Game
         }
     }
 
+    public function Combattre(Personnage $joueur, Personnage $monstre) {
+        while (!$this->currentSalle->getMonstre()->isDead()) {
+
+            $joueur->afficherStats();
+            $monstre->afficherStats();
+            // TODO VVV
+            // $joueur->afficheAttaque();
+            $choix = readline();
+            switch ($choix) {
+                case 1:
+                    $joueur->attaquer($monstre);
+                    $monstre->attaquer($joueur);
+                    break;
+                case 2:
+                    $joueur->afficherStats();
+                    break;
+                }
+            }
     
+    }
     public function afficheAttaque() {
         echo "1. Attaquer\n";
         echo "2. Voirs stats\n";
