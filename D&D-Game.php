@@ -134,7 +134,7 @@ class DD_Game
                     $this->joueur->gagnerExp($this->currentSalle->getMonstre()->getExp());
                     $this->joueur->gagnerOr($this->currentSalle->getMonstre()->getOr());
                     $this->joueur->gagnerObjet($this->currentSalle->getMonstre()->getObjet());
-                    $this->joueur->LevelUp();
+                    $this->joueur->isLevelUp();
                     $this->joueur->afficherStats();
                 }
                 break;
