@@ -31,6 +31,10 @@ class Personnage
     {
         return $this->PV;
     }
+    public function getPVMax()
+    {
+        return $this->PVMax;
+    }
     public function getPA()
     {
         return $this->PA;
